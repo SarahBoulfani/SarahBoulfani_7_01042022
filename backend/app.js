@@ -17,16 +17,16 @@ const app = express();
 app.use(express.json());
 
 
-
-app.get('/', (req, res) => res.send('Hi'));
+//test api
+app.get('/', (req, res) => res.send('Bonjour API !'));
 
 
 
 
 //Tester la connection à la base se données
-db.authenticate()
+/*  db.authenticate()
     .then(() => console.log('Connexion à mysql réussie !'))
-    .catch(err => console.log('Connexion à mysql échouée !:', error));
+    .catch(err => console.log('Connexion à mysql échouée !:', error));  */
 
 
 
