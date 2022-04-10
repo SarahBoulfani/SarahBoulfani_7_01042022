@@ -8,11 +8,7 @@ const path = require('path');
 const express = require('express');
 //Créer notre application express
 const app = express();
-//Utiliser express.json 
-app.use(express.json());
 
-//middleware used only for parsing request body of content-type x-www-form-urlencoded 
-app.use(express.urlencoded({ extended: true }));
 //Importer le router user
 const userRoutes = require('./routes/user');
 
@@ -43,6 +39,12 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
+
+//Utiliser express.json 
+app.use(express.json());
+
+//middleware used only for parsing request body of content-type x-www-form-urlencoded 
+app.use(express.urlencoded({ extended: true }));
 
 //Enregister le router user
 app.use('/api/user', userRoutes);
