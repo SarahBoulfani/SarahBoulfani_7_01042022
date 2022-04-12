@@ -30,7 +30,9 @@ db.sequelize.sync()
 .catch(error => console.log(error));
  
 
+var cors = require('cors');
 
+app.use(cors());
 
 //Ajout des headers pour accéder à notre API depuis n'importe quelle origine et avec les méthodes mentionnées. Le middleware ne prend pas d'adresse afin de s'appliquer à toutes les routes
 app.use((req, res, next) => {

@@ -3,10 +3,11 @@
 <!-- navbar -->
 <NavBar/>
 <!-- form -->
-  <main class="form-signin">
+
    <router-view/>   
-</main> 
+
 </div>
+
 </template>
 
 <script>
@@ -27,7 +28,7 @@ export default {
   max-width: 330px;
   padding: 15px;
   margin: auto;
-  
+
 }
 
 .form-signin .checkbox {
