@@ -1,5 +1,6 @@
 <template>
   <main>
+    <NavBar/>
   <div class="container py-4">
            
     <div class="p-5 mb-4 bg-light rounded-3 back">
@@ -22,15 +23,21 @@
 
 
 <script>
+import NavBar from '../components/NavBar.vue'
 import axios from 'axios'
+
 export default {
   name : 'AccueilView',
+   components: {
+    NavBar
+    },
 
   data() {
     return {
       user: null
     }
   },
+ 
   created() {
     const id = localStorage.getItem('userId')
     axios.get(`http://localhost:3000/api/user/${id}`)
@@ -41,8 +48,10 @@ export default {
      .catch((error ) => {
       console.log(error);
     });
+    
   },
- 
+   
+   
 }
 </script>
 

@@ -1,13 +1,13 @@
 import { createStore } from 'vuex'
 
 export default createStore({
-  state: {
+  state:{
   },
   getters: {
   },
   mutations: {
   },
-  actions: {
+  actions: {  
   },
   modules: {
   }

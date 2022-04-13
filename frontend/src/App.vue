@@ -1,24 +1,13 @@
 <template>
- <div id="app">
-<!-- navbar -->
-<NavBar/>
-<!-- form -->
-
-   <router-view/>   
-
-</div>
-
+  <div id="app">
+    <router-view />
+  </div>
 </template>
 
 <script>
-import NavBar from './components/NavBar.vue'
-
 export default {
-  name : 'App',
-  components: {
-    NavBar
-    }
-}
+  name: "App",
+};
 </script>
 
 
@@ -28,7 +17,6 @@ export default {
   max-width: 330px;
   padding: 15px;
   margin: auto;
-
 }
 
 .form-signin .checkbox {
