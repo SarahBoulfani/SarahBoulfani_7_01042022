@@ -13,7 +13,12 @@
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
             <router-link to="/AccueilView" class="nav-link active" href="#"
-              >Accueill</router-link
+              >Accueil</router-link
+            >
+          </li>
+           <li class="nav-item">
+            <router-link to="/ProfilView" class="nav-link active" href="#"
+              ><img class="img-profil" :src="image"  /></router-link
             >
           </li>
           <li class="nav-item">
@@ -22,7 +27,11 @@
               to="/LoginView"
               class="nav-link active"
               href="#"
-              >Déconnexion</router-link
+              ><img
+            class="img-deconnect"
+            src="../assets/deconnexion.png"
+            alt="Déconnexion"
+        /></router-link
             >
           </li>
         </ul>
@@ -33,8 +42,26 @@
 
 
 <script>
+import axios from 'axios';
 export default {
   name: "NavBar",
+  data() {
+    return {
+      image:""
+    }
+  },
+  mounted() {
+     const id = localStorage.getItem('userId')
+    axios.get(`http://localhost:3000/api/user/${id}`)
+    .then((response) =>{
+     console.log(response);
+      
+       this.image = response.data.image 
+    })
+     .catch((error ) => {
+      console.log(error);
+    });
+  },
   methods: {
     logout() {
       localStorage.clear();
@@ -51,6 +78,16 @@ export default {
     height: 60px;
   }
 }
+.img-profil{
+  height: 30px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.img-deconnect{
+  height: 29px;
+  
+}
+
 </style>
 
 

@@ -108,8 +108,8 @@ export default {
         })
         .then((response) => {
           console.log(response);
-          //redirection vers la page d'accueil
-          this.$router.push("/ProfilView");
+          //redirection vers la page Login
+          this.$router.push("/LoginView");
           alert("Votre inscription est validé");
         })
         .catch((error) => {

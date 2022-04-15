@@ -20,11 +20,7 @@ const db = require('./models');
 
 
 
-//Test api
-app.get('/', (req, res) => res.send('Bonjour API !'));
-
-
-//db
+//Synchronisation de la db
 db.sequelize.sync()
 .then((console.log("connexion à BDD reussie !")))
 .catch(error => console.log(error));
@@ -48,6 +44,8 @@ app.use(express.json());
 //middleware used only for parsing request body of content-type x-www-form-urlencoded 
 app.use(express.urlencoded({ extended: true }));
 
+//Gérer la route vers le dossier images et traiter les requêtes vers la route /image. express.static gère de manière statique la ressource images à chaque requête vers la route images.
+app.use('/images', express.static(path.join(__dirname, 'images')));
 //Enregister le router user
 app.use('/api/user', userRoutes);
 

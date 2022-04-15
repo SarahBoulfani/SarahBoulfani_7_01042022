@@ -90,7 +90,7 @@ export default {
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("userId", response.data.userId);
 
-          //redirection vers la page d'accueil
+          //redirection vers la page profil
           this.$router.push("/ProfilView");
         })
 

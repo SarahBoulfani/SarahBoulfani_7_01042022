@@ -10,7 +10,7 @@
         <h1 class="display-6 fw-bold">Groupomania</h1>
         <p class="col-md-8 fs-4">Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. Check out the examples below for how you can remix and restyle it to your liking.</p>
         
-        <button class="btn btn-primary btn-lg btn-home" type="button"><router-link to="/SignupView" >Inscription </router-link></button>
+        <button class="btn btn-primary btn-lg btn-home" type="button"><router-link to="/" >Inscription </router-link></button>
        
       </div>
     </div>

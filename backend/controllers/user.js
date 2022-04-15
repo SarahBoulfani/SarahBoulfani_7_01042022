@@ -2,7 +2,8 @@
 const bcrypt = require('bcrypt');
 //Importer le package jsonwebtoken
 const jwt = require('jsonwebtoken');
-
+//Importer package fs de node fs:file system qui nous donne accès aux fonctions qui nous permettent de modifier le système de fichiers, y compris aux fonctions permettant de supprimer les fichiers.
+const fs = require('fs');
 //models
 const db = require("../models");
 
@@ -57,11 +58,43 @@ exports.login = (req, res, next) => {
     })
     .catch(error => res.status(500).json({ error }));
 };
-
+//récupérer un user
 exports.getOneUser = (req, res, next) => {
   db.User.findOne({ where: {id: req.params.id} })
     .then(user => res.status(200).json(user))
     .catch(error => res.status(404).json({ error }));
 };
 
+//Modifier un user 
+exports.modifyUser = (req, res, next) => {
+  //Opérateur terniaire pour vérifier s'il existe un fichier image ou non
+  const userObject = req.file ?
+    {//si il y a un fichier on récupère le fichier
+      ...req.body,
+      //on modifie l'image sinon on prend simplement les information req.body
+      image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    } : { ...req.body }; //req.body si le fichier n'existe pas 
+  //On utilise le paramètre id de la requête pour trouver le user et le modifier avec le même id grace à la méthode update(). Cela nous permet de mettre à jour le user
+  db.User.update({ ...userObject}, { where: { id: req.params.id }})
+    .then(() => res.status(200).json({ message: 'Profil modifié !' }))
+    .catch(error => res.status(400).json({ error }));
+};
+
+//Suppression du compte
+exports.deleteUser = (req, res, next) => {
+  //Récupérer le user de la base de données
+  db.User.findOne({ where: {id: req.params.id} })
+    .then(user => {
+      //Extraire le nom de fichier à supprimer
+      const filename = user.image.split('/images/')[1];
+      //Avec le nom de fichier et grace à la fonction unlink du package fs on supprimer le fichier
+      fs.unlink(`images/${filename}`, () => {
+        //Une fois la suppresion du fichier est effectué on supprime l'objet dans la base de données
+        db.User.destroy({ where: {id: req.params.id} })
+          .then(() => res.status(200).json({ message: 'Compte supprimé !' }))
+          .catch(error => res.status(400).json({ error }));
+      });
+    })
+    .catch(error => res.status(500).json({ error }));//erreur serveur
+};
 
