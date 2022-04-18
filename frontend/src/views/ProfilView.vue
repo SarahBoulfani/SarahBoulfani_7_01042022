@@ -12,7 +12,7 @@
               <img
                 class="img-account-profile rounded-circle mb-2"
                 :src="image"
-                alt="Image profil"
+                alt="Photo de profil"
               />
               <!-- Profile picture help block-->
 
@@ -48,6 +48,7 @@
                       id="inputFirstName"
                       type="text"
                       :placeholder="firstname"
+                      v-model="newFirstname"
                     />
                   </div>
                   <!-- Form Group (last name)-->
@@ -60,6 +61,7 @@
                       id="inputLastName"
                       type="text"
                       :placeholder="lastname"
+                       v-model="newLastname"
                     />
                   </div>
                 </div>
@@ -119,6 +121,7 @@ export default {
       });
   },
   methods: {
+    //Télécharger l'image
     selectFile(event) {
       console.log(event);
       const id = localStorage.getItem("userId");
@@ -141,7 +144,52 @@ export default {
           console.log(error);
         });
     },
-    modifyUser() {},
+    //modifier les informations du user
+    modifyUser() {
+       const id = localStorage.getItem("userId");
+      const formData = new FormData();
+      formData.append("firstname", this.newFirstname);
+       formData.append("lastname", this.newLastname);
+
+     axios.put(`http://localhost:3000/api/user/${id}`, formData, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          this.newFirstname = response.data.firstname;
+          this.newLastname = response.data.lastname;
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+     
+    },
+    //Supprimer le compte
+    deleteUser(){
+      //TO DO ajouter une confirmation avant suppression
+    const id = localStorage.getItem("userId");
+    
+     axios.delete(`http://localhost:3000/api/user/${id}`, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          localStorage.clear();
+          alert("Votre compte a été supprimer");
+          this.$router.push('/')
+          
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+     
+     
+    }
   },
 };
 </script>
@@ -156,6 +204,8 @@ export default {
 body {
   font-family: "Poppins", sans-serif;
   background-color: #f2f6fc;
+   /* background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpUhXdCNmsP00fvCtI_TvYa_NrXedilm2oyw&usqp=CAU");
+   background-size: cover; */
 }
 .img-account-profile {
   height: 10rem;

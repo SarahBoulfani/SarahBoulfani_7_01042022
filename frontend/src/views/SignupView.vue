@@ -30,8 +30,8 @@
     <!-- form -->
     <form @submit.prevent="signup" class="form-signin">
       <h1 class="h3 mb-3 fw-normal">Inscrivez-vous</h1>
-      
-
+            <!-- Si il ya une erreur -->
+          <ErrorMsg v-if="error" :error="error"/>
       <div class="form-floating">
         <input
           type="text"
@@ -40,7 +40,7 @@
           v-model="firstname"
           required
         />
-        <label for="floatingInput-firstname">First Name</label>
+        <label for="floatingInput-firstname">Prénom</label>
       </div>
 
       <div class="form-floating">
@@ -51,7 +51,7 @@
           v-model="lastname"
           required
         />
-        <label for="floatingInput-lastname">Last Name</label>
+        <label for="floatingInput-lastname">Nom</label>
       </div>
 
       <div class="form-floating">
@@ -62,7 +62,7 @@
           v-model="email"
           required
         />
-        <label for="floatingInput">Email address</label>
+        <label for="floatingInput">Email</label>
       </div>
 
       <div class="form-floating">
@@ -76,7 +76,10 @@
         <label for="floatingPassword">Password</label>
       </div>
 
-      <button class="w-100 btn btn-lg btn-primary" type="submit">
+      <button
+        class="w-100 btn btn-lg btn-primary"
+        type="submit"
+      >
         Inscription
       </button>
     </form>
@@ -84,21 +87,40 @@
 </template>
 <script>
 import axios from "axios";
+import ErrorMsg from '../components/ErrorMsg';
 
 export default {
-  name: "SignupView",
   
+  name: "SignupView",
+  components:{
+      ErrorMsg
+  },
+
   data() {
     return {
       firstname: "",
       lastname: "",
       email: "",
       password: "",
-     
+      error: "",
+      userRegex: /^[a-zA-Zàâäéèêëïîôöùûüÿç-]+$/,
+      emailRegex: /^[a-zA-Z0-9._-]+[@]{1}[a-zA-Z0-9._-]+[.]{1}[a-z]{2,10}$/,
+      passwordRegex: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,50}$/,
     };
   },
-  methods: {
+  methods: { 
     signup() {
+      //Validation du formulaire 
+      if (!this.userRegex.test(this.firstname)) {
+        return (this.error = 'Prénom non valide');
+        } else if (!this.userRegex.test(this.lastname)) {
+        return (this.error = 'Nom non valide');
+        } else if (!this.emailRegex.test(this.email)) {
+        return (this.error = 'Email non valide');
+        } else if (!this.passwordRegex.test(this.password)) {
+        return (this.error = 'Votre mot de passe doit contenir au moins 6 caractères, dont un chiffre, une minuscule et une majuscule');
+        }
+        //Inscription
       axios
         .post("http://localhost:3000/api/user/signup", {
           firstname: this.firstname,
@@ -114,7 +136,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-         
+           this.error='Cette adresse email est déjà utilisée'
         });
     },
   },

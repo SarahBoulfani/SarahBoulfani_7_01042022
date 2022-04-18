@@ -40,7 +40,7 @@
           v-model="email"
           required
         />
-        <label for="floatingInput">Email address</label>
+        <label for="floatingInput">Email</label>
       </div>
 
       <div class="form-floating">
