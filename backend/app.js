@@ -11,6 +11,8 @@ const app = express();
 
 //Importer le router user
 const userRoutes = require('./routes/user');
+//Importer le router user
+const postRoutes = require('./routes/post');
 
 //Import config
 const config = require('./config/config.json')
@@ -21,7 +23,7 @@ const db = require('./models');
 
 
 //Synchronisation de la db
-db.sequelize.sync()
+db.sequelize.sync()//{force: true}
 .then((console.log("connexion à BDD reussie !")))
 .catch(error => console.log(error));
  
@@ -48,6 +50,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 //Enregister le router user
 app.use('/api/user', userRoutes);
+//Enregister le router user
+app.use('/api/post', postRoutes);
 
 
 //Exporter cette constante pour pouvoir y accéder depuis les autres fichiers notamment notre serveur node 

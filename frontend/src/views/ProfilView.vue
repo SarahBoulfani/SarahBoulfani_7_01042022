@@ -16,16 +16,17 @@
               />
               <!-- Profile picture help block-->
 
-              <div>
-                <label class="small mb-1" for="formFile"
-                  >Changer votre photo :</label
-                >
+              <div class="formFile">
+               
                 <input
                   class="form-control"
-                  id="formeFile"
+                  id="formFile"
                   type="file"
                   @change="selectFile"
                 />
+                 <label class="label-post" for="formFile"
+                  ><i class="fas fa-camera"> Changer votre photo</i></label
+                >
               </div>
             </div>
           </div>

@@ -1,72 +1,164 @@
 <template>
   <main>
-    <NavBar/>
-  <div class="container py-4">
-           
-    <div class="p-5 mb-4 bg-light rounded-3 back">
-      <div class="container-fluid py-5">
-            <h3 v-if="user">Hi, {{user.firstname}} {{ user.lastname}}</h3>
-             <h3 v-if="!user">Vous n'êtes pas connecté !</h3>
-        <h1 class="display-6 fw-bold">Groupomania</h1>
-        <p class="col-md-8 fs-4">Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. Check out the examples below for how you can remix and restyle it to your liking.</p>
-        
-        <button class="btn btn-primary btn-lg btn-home" type="button"><router-link to="/" >Inscription </router-link></button>
-       
+    <NavBar />
+
+    <div class="card-width container">
+      <div class="px-4 mt-5">
+        <!-- Account details card-->
+        <div class="card mb-4">
+          <div class="card-header">
+            <img
+              :src="image"
+              alt="Photo de profil"
+              class="avatar rounded-circle"
+            />Hi, {{ firstname }}
+          </div>
+          <div class="card-body">
+            <form>
+              <!-- TODO image à enlevé-->
+              <div><img 
+                class="img-account-profile mb-2"
+                :src="image"
+                alt="Photo de profil"
+              />
+
+              
+                <!-- Form publication-->
+                <textarea
+                  class="form-control"
+                  placeholder="Quoi de neuf ?"
+                  v-model="content"
+                ></textarea>
+               
+                <!-- Upload image-->
+                <div class="d-flex">
+                  <div class="formFile">
+                    <input id="formFile" accept="image/*" type="file" @change="uploadFile" />
+                    <label class="label-post" for="formFile"
+                      ><i class="fas fa-camera"> Image</i></label
+                    >
+                  </div>
+
+                  <div class="col-xl-4">
+                    <!-- Save changes button-->
+                    <button class="btn btn-post btn-primary m-2" @click="createPost">Publier</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
- 
-  </div>
-</main>
-    
+  </main>
 </template>
 
 
 
 <script>
-import NavBar from '../components/NavBar.vue'
-import axios from 'axios'
+import NavBar from "../components/NavBar.vue";
+import axios from "axios";
 
 export default {
-  name : 'AccueilView',
-   components: {
-    NavBar
-    },
+  name: "AccueilView",
+  components: {
+    NavBar,
+  },
 
   data() {
     return {
-      user: null
-    }
+     firstname:"",
+     lastname:"",
+     image:"",
+     content:"",
+     user:{},
+     userId: localStorage.getItem("userId"),
+     post:{},
+     posts:[],
+    };
   },
- 
-  created() {
-    const id = localStorage.getItem('userId')
-    axios.get(`http://localhost:3000/api/user/${id}`)
-    .then((response) =>{
-     console.log(response);
-     this.user = response.data;
+
+ mounted () {
+     const id = localStorage.getItem('userId')
+     axios.get(`http://localhost:3000/api/user/${id}`)
+     .then((response) => {
+       this.firstname = response.data.firstname
+       this.lastname = response.data.lastname
+       this.image = response.data.image    
+  })
+      .catch((error ) => {
+        console.log(error);
+     })
+     axios
+      .get('http://localhost:3000/api/post/',{
+          headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      }
     })
-     .catch((error ) => {
-      console.log(error);
+      .then((response) => {
+       this.posts = response.data.post;
+    })
+      .catch((error) => {
+      console.log(error)
     });
-    
-  },
-   
-   
-}
+ }, 
+  methods: {
+   aploadFile(event){
+     console.log(event)
+     this.image = event.target.files[0];
+   },
+    createPost () {
+        const fd = new FormData();
+        fd.append('userId', this.userId);
+        fd.append('content', this.content);
+        fd.append('image', this.image);
+        axios.post('http://localhost:3000/api/post', fd, {
+          headers: {
+           Authorization: 'Bearer ' + localStorage.getItem('token')
+         }
+        })
+      .then(() => {
+          window.location.reload();
+      })
+      .catch((error) => {
+          console.log(error)
+      });
+    },
+ }, 
+};
 </script>
 
 
-<style lang="scss"> 
-.back{
-  background: #e5e5e5 !important;
+<style lang="scss">
+  
+
+.avatar {
+  width: 30px;
+  margin-right: 5px;
 }
-a{
-  text-decoration: none;
-  color: white;
+.formFile {
+  margin: 10px 0 10px 0;
 }
-.btn-home{
-   background: #fca311 !important;
-   border: none;
+.card-width {
+   @media screen and ( min-width: 770px ) {
+    width: 50%;
+  }
+  
 }
+input[type="file"] {
+  display: none;
+}
+.label-post {
+  margin: 0px !important;
+  font-size: 17px; 
+  padding: 6px;
+  border-radius: 5px;
+  background: rgb(214, 210, 211);
+}
+.btn-post{
+  margin: 10px !important;
+ 
+}
+
 </style>
 
