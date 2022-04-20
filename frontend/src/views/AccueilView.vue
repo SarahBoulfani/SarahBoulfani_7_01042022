@@ -23,7 +23,7 @@
               />
 
               
-                <!-- Form publication-->
+                <!-- publication-->
                 <textarea
                   class="form-control"
                   placeholder="Quoi de neuf ?"
