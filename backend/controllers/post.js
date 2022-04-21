@@ -10,7 +10,7 @@ exports.createPost = (req, res, next) => {
   {//si il y a un fichier on récupère le fichier
     ...req.body,
     //on modifie l'image sinon on prend simplement les information req.body
-    image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
   } : { ...req.body }; //req.body si le fichier n'existe pas 
 db.Post.create({ ...postObject})
   .then(() => res.status(200).json({ message: 'Post crée!' }))

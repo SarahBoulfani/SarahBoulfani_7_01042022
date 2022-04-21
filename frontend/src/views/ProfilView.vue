@@ -204,7 +204,7 @@ export default {
 
 body {
   font-family: "Poppins", sans-serif;
-  background-color: #f2f6fc;
+  background-color:#eae9e7;
    /* background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpUhXdCNmsP00fvCtI_TvYa_NrXedilm2oyw&usqp=CAU");
    background-size: cover; */
 }
