@@ -63,7 +63,7 @@
               <div class="user-block">
                 <!-- IMAGE USER -->
                 <img
-                  class="img-circle"
+                  class="rounded-circle"
                   :src="post.User.image"
                   alt="User Image"
                 />
@@ -72,6 +72,14 @@
                 <span class="description">Shared publicly - 7:30 PM Today</span>
               </div>
               <div class="box-tools">
+                <!-- bouton modification -->
+                   <button
+                  type="button"
+                  class="btn btn-box-tool"
+                  data-widget="remove"
+                >
+                <i class="fa fa-refresh" aria-hidden="true"></i>
+                </button>
                 <!-- bouton suppression post -->
                 <button
                   type="button"

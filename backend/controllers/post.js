@@ -3,7 +3,7 @@ const fs = require('fs');
 //models
 const db = require("../models");
 
-//Ajouter une sauce 
+//Ajouter un post
 exports.createPost = (req, res, next) => {
    //Opérateur terniaire pour vérifier s'il existe un fichier image ou non
   const postObject = req.file ?
@@ -19,13 +19,13 @@ db.Post.create({ ...postObject})
 };
 
 //Récupérer un post
-
 exports.getOnePost = (req, res, next) => {
   db.Post.findOne({ where: {id: req.params.id} })
     .then(post => res.status(200).json(post))
     .catch(error => res.status(404).json({ error }));
 };
-//récupérer tt les post
+
+//récupérer tous les posts
 exports.getAllPosts = (req, res, next) => {
   db.Post.findAll({
      order: [

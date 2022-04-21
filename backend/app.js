@@ -13,6 +13,8 @@ const app = express();
 const userRoutes = require('./routes/user');
 //Importer le router user
 const postRoutes = require('./routes/post');
+//Importer le router user
+const commentRoutes = require('./routes/comment');
 
 //Import config
 const config = require('./config/config.json')
@@ -52,6 +54,8 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/user', userRoutes);
 //Enregister le router user
 app.use('/api/post', postRoutes);
+//Enregister le router user
+app.use('/api/comment', commentRoutes);
 
 
 //Exporter cette constante pour pouvoir y accéder depuis les autres fichiers notamment notre serveur node 

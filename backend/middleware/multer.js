@@ -5,7 +5,8 @@ const MIME_TYPES = {
   'image/jpg': 'jpg',
   'image/jpeg': 'jpg',
   'image/png': 'png',
-  'image/gif': 'gif'
+  'image/gif': 'gif',
+  'image/webp': 'webp'
 };
 //Créer un objet de configuration pour multer"storage", et utiliser la fonction diskStorage de multer pour lui dire qu'on va le stocker sur le disque, l'objet de configuration a besoin de 2 éléments distination et filename 
 const storage = multer.diskStorage({
