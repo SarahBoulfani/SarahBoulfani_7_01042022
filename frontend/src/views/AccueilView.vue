@@ -4,7 +4,7 @@
 
     <div class="card-width container">
       <div class="px-4 mt-5">
-        <!-- Account details card-->
+        <!-- User info-->
         <div class="card mb-4">
           <div class="card-header">
             <img
@@ -16,7 +16,7 @@
           <div class="card-body">
             <form>
               <div>
-                <!-- publication-->
+                <!-- Publication-->
                 <textarea
                   class="form-control"
                   placeholder="Quoi de neuf ?"
@@ -39,7 +39,7 @@
                   </div>
 
                   <div class="col-xl-4">
-                    <!-- Save changes button-->
+                    <!-- Bouton publier-->
                     <button
                       class="btn btn-post btn-primary m-2"
                       @click="createPost()"
@@ -61,24 +61,26 @@
           <div class="box box-widget">
             <div class="box-header with-border">
               <div class="user-block">
-                <!-- IMAGE USER -->
+                <!-- Image user-->
                 <img
                   class="rounded-circle"
                   :src="post.User.image"
                   alt="User Image"
                 />
-                <!-- info user  -->
-                <span class="username">{{post.User.firstname}} {{post.User.lastname}}</span>
+                <!-- Info user  -->
+                <span class="username"
+                  >{{ post.User.firstname }} {{ post.User.lastname }}</span
+                >
                 <span class="description">Shared publicly - 7:30 PM Today</span>
               </div>
               <div class="box-tools">
-                <!-- bouton modification -->
-                   <button
+                <!-- Bouton modification -->
+                <button
                   type="button"
                   class="btn btn-box-tool"
                   data-widget="remove"
                 >
-                <i class="fa fa-refresh" aria-hidden="true"></i>
+                  <i class="fa fa-refresh" aria-hidden="true"></i>
                 </button>
                 <!-- bouton suppression post -->
                 <button
@@ -90,68 +92,79 @@
                 </button>
               </div>
             </div>
-            <!-- content -->
+            <!-- Contenu post -->
             <p class="content">
-             {{post.content}}
+              {{ post.content }}
             </p>
             <div class="box-body text-center" style="display: block">
-              <!-- imagepost -->
-              <img
-                class="img-responsive img-post pad"
-                :src="post.imageUrl"
-               
-              />
+              <!-- Image post -->
+              <img class="img-responsive img-post pad" :src="post.imageUrl" />
 
               <hr />
             </div>
-            <div class="box-footer box-comments" style="display: block">
-              <div class="box-comment">
-                <img
-                  class="img-circle img-sm"
-                  src="https://bootdey.com/img/Content/avatar/avatar2.png"
-                  alt="User Image"
-                />
-                <div class="comment-text">
-                  <span class="username">
-                    Maria Gonzales
-                    <span class="text-muted pull-right">8:03 PM Today</span>
-                  </span>
-                  It is a long established fact that a reader will be distracted
-                  by the readable content of a page when looking at its layout.
-                </div>
-              </div>
-
-              <div class="box-comment">
-                <img
-                  class="img-circle img-sm"
-                  src="https://bootdey.com/img/Content/avatar/avatar3.png"
-                  alt="User Image"
-                />
-                <div class="comment-text">
-                  <span class="username">
-                    Luna Stark
-                    <span class="text-muted pull-right">8:03 PM Today</span>
-                  </span>
-                  It is a long established fact that a reader will be distracted
-                  by the readable content of a page when looking at its layout.
+            <!-- Commentaire -->
+            <div
+              v-for="comment in comments"
+              :key="comment.id"
+              style="display: block"
+            >
+              <div v-if="comment.postId === post.id">
+                <div class="box-footer box-comments">
+                  <div class="box-comment">
+                    <img
+                      class="rounded-circle img-sm"
+                      :src="comment.User.image"
+                      alt="User Image"
+                    />
+                    <div class="comment-text">
+                      <span class="username">
+                        {{ comment.User.firstname }} {{ comment.User.lastname }}
+                        <span class="text-muted pull-right">8:03 PM Today</span>
+                      </span>
+                      {{ comment.textComment }}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+
+            <!-- ajouter un commentaire -->
             <div class="box-footer" style="display: block">
-              <form action="#" method="post">
-                <img
-                  class="img-responsive img-circle img-sm"
-                  src="https://bootdey.com/img/Content/avatar/avatar1.png"
-                  alt="Alt Text"
-                />
-                <div class="img-push">
+              <img
+                class="img-responsive rounded-circle img-sm"
+                :src="image"
+                alt="Alt Text"
+              />
+              <div class="img-push">
+                <div class="input-group">
+                  <!-- Contenu commentaire -->
                   <input
+                    v-model="comment"
                     type="text"
-                    class="form-control input-sm"
-                    placeholder="Press enter to post comment"
+                    class="form-control"
+                    placeholder="Ajouter un commentaire..."
+                    aria-label="Input comment"
                   />
+                  <!-- bouton commentaire -->
+                  <button
+                    class="input-group-text"
+                    @click="createComment(post.id)"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-chat"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z"
+                      />
+                    </svg>
+                  </button>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
         </div>
@@ -177,17 +190,21 @@ export default {
       firstname: "",
       lastname: "",
       image: "",
-      imageUrl:"",
-      file:"",
+      imageUrl: "",
+      file: "",
       content: "",
       user: {},
       userId: localStorage.getItem("userId"),
+      postId: "",
       post: {},
       posts: [],
+      comment: "",
+      comments: [],
     };
   },
 
   mounted() {
+    //Affichage info user + post
     const id = localStorage.getItem("userId");
     axios
       .get(`http://localhost:3000/api/user/${id}`)
@@ -206,18 +223,21 @@ export default {
         },
       })
       .then((response) => {
-        console.log(response)
+        console.log(response);
         this.posts = response.data.post;
       })
       .catch((error) => {
         console.log(error);
       });
+
+    this.getComment();
   },
   methods: {
+    //Téléchargement d'image
     uploadFile(event) {
-      
       this.file = event.target.files[0];
     },
+    //Création post
     createPost() {
       const fd = new FormData();
       fd.append("userId", this.userId);
@@ -236,6 +256,48 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    //Récupérer les commentaires
+    getComment() {
+      axios
+        .get(`http://localhost:3000/api/comment/`, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
+        .then((response) => {
+          this.comments = response.data.comment;
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    //Ajouter un commentaire
+    createComment(id) {
+      if (this.comment != "") {
+        axios
+          .post(
+            "http://localhost:3000/api/comment",
+            {
+              userId: this.userId,
+              textComment: this.comment,
+              postId: id,
+            },
+            {
+              headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+              },
+            }
+          )
+          .then((response) => {
+            console.log(response);
+            this.getComment();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
   },
 };
@@ -337,15 +399,13 @@ input[type="file"] {
   border-color: #ddd;
 }
 .box-comments {
-  background: #f7f7f7 !important;
+  background: #e6e4e4 !important;
 }
 .box-footer {
-  border-top-left-radius: 0;
+  border-radius: 20px;
   border-top-right-radius: 0;
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
-  border-top: 1px solid #f4f4f4;
   padding: 10px;
+  margin: 15px;
   background-color: #fff;
 }
 .box-comments .box-comment:first-of-type {
@@ -353,7 +413,7 @@ input[type="file"] {
 }
 .box-comments .box-comment {
   padding: 8px 0;
-  border-bottom: 1px solid #eee;
+
 }
 .img-sm,
 .box-comments .box-comment img,

@@ -14,7 +14,7 @@ exports.createComment = (req, res, next) => {
 exports.getAllCommentsOfOnePost = (req, res, next) => {
     db.Comment.findAll({
         where: { postId: req.params.postId }, order: [
-            ['createdAt', 'DESC'] // affichage par comment le plus récent en premier
+            ['createdAt', 'ASC'] 
         ],
         include: [
             { model: db.User }
@@ -28,13 +28,13 @@ exports.getAllCommentsOfOnePost = (req, res, next) => {
 exports.getAllComments = (req, res, next) => {
     db.Comment.findAll({
         order: [
-            ['createdAt', 'DESC'] // affichage par comment le plus récent en premier
+            ['createdAt', 'ASC'] 
         ],
         include: [
             { model: db.User }
         ]
     })
-        .then((comments) => res.status(200).json({ comments }))
+        .then((comment) => res.status(200).json({ comment }))
         .catch((error) => res.status(400).json({ error }));
 };
 

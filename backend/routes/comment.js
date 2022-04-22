@@ -6,7 +6,7 @@ const auth = require('../middleware/auth');
 //Importer le controllers
 const commentCtrl = require('../controllers/comment');
 //Créer les routes
-router.post('/',  auth,commentCtrl.createComment); 
+router.post('/',commentCtrl.createComment); 
 router.get('/:postId', auth, commentCtrl.getAllCommentsOfOnePost);
 router.get('/', auth, commentCtrl.getAllComments) 
 //router.delete('/:id',auth, commentCtrl.deleteComment);  
