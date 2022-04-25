@@ -83,10 +83,11 @@
                   <i class="fa fa-refresh" aria-hidden="true"></i>
                 </button>
                 <!-- bouton suppression post -->
-                <button
+                <button v-if="post.userId == userId || userId ==='1'"
                   type="button"
                   class="btn btn-box-tool"
                   data-widget="remove"
+                  @click="deletePost(post.id)"
                 >
                   <i class="fa fa-times"></i>
                 </button>
@@ -119,7 +120,17 @@
                     <div class="comment-text">
                       <span class="username">
                         {{ comment.User.firstname }} {{ comment.User.lastname }}
-                        <span class="text-muted pull-right">8:03 PM Today</span>
+                        <span class="text-muted pull-right"
+                          >8:03 PM Today
+                          <!-- bouton suppression commentaire -->
+                          <button v-if="comment.userId == userId || userId ==='1'"
+                            type="button"
+                            class="btn btn-box-tool"
+                            data-widget="remove"
+                            @click="deleteComment(comment.id)"
+                          >
+                            <i class="fa fa-times"></i></button
+                        ></span>
                       </span>
                       {{ comment.textComment }}
                     </div>
@@ -299,6 +310,39 @@ export default {
           });
       }
     },
+    //Supprimer un post
+    deletePost(id) {
+      axios
+        .delete(`http://localhost:3000/api/post/${id}`, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    //Supprimer un commentaire
+    //Supprimer un post
+    deleteComment(id) {
+      axios
+        .delete(`http://localhost:3000/api/comment/${id}`, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
@@ -413,7 +457,6 @@ input[type="file"] {
 }
 .box-comments .box-comment {
   padding: 8px 0;
-
 }
 .img-sm,
 .box-comments .box-comment img,

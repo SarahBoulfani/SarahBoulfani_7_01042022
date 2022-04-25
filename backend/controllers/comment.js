@@ -14,7 +14,7 @@ exports.createComment = (req, res, next) => {
 exports.getAllCommentsOfOnePost = (req, res, next) => {
     db.Comment.findAll({
         where: { postId: req.params.postId }, order: [
-            ['createdAt', 'ASC'] 
+            ['createdAt', 'ASC']
         ],
         include: [
             { model: db.User }
@@ -28,7 +28,7 @@ exports.getAllCommentsOfOnePost = (req, res, next) => {
 exports.getAllComments = (req, res, next) => {
     db.Comment.findAll({
         order: [
-            ['createdAt', 'ASC'] 
+            ['createdAt', 'ASC']
         ],
         include: [
             { model: db.User }
@@ -38,3 +38,16 @@ exports.getAllComments = (req, res, next) => {
         .catch((error) => res.status(400).json({ error }));
 };
 
+//Supprimer un commentaire
+//Suppression d'un post
+exports.deleteComment = (req, res, next) => {
+    //Récupérer le commentaire de la base de données
+    db.Comment.findOne({ where: { id: req.params.id } })
+        .then(() => { 
+            db.Comment.destroy({ where: { id: req.params.id } })
+                .then(() => res.status(200).json({ message: 'Commentaire supprimé !' }))
+                .catch(error => res.status(400).json({ error }));
+
+        })
+        .catch(error => res.status(500).json({ error }));//erreur serveur
+};

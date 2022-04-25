@@ -9,6 +9,6 @@ const commentCtrl = require('../controllers/comment');
 router.post('/',commentCtrl.createComment); 
 router.get('/:postId', auth, commentCtrl.getAllCommentsOfOnePost);
 router.get('/', auth, commentCtrl.getAllComments) 
-//router.delete('/:id',auth, commentCtrl.deleteComment);  
+router.delete('/:id', auth, commentCtrl.deleteComment);  //TODO ajout auth
 //exporter les routes 
 module.exports = router;
