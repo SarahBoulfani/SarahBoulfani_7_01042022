@@ -71,7 +71,11 @@
                 <span class="username"
                   >{{ post.User.firstname }} {{ post.User.lastname }}</span
                 >
-                <span class="description">Shared publicly - 7:30 PM Today</span>
+                <span
+                  class="description"
+                  :title="humanFriendlyDate(post.createdAt)"
+                  >{{ diffForHumans(post.createdAt) }}</span
+                >
               </div>
               <div class="box-tools">
                 <!-- Bouton modification -->
@@ -83,7 +87,8 @@
                   <i class="fa fa-refresh" aria-hidden="true"></i>
                 </button>
                 <!-- bouton suppression post -->
-                <button v-if="post.userId == userId || userId ==='1'"
+                <button
+                  v-if="post.userId == userId || userId === '1'"
                   type="button"
                   class="btn btn-box-tool"
                   data-widget="remove"
@@ -120,10 +125,11 @@
                     <div class="comment-text">
                       <span class="username">
                         {{ comment.User.firstname }} {{ comment.User.lastname }}
-                        <span class="text-muted pull-right"
-                          >8:03 PM Today
+                        <span class="text-muted pull-right" :title="humanFriendlyDate(comment.createdAt)"
+                          >{{ diffForHumans(comment.createdAt) }}
                           <!-- bouton suppression commentaire -->
-                          <button v-if="comment.userId == userId || userId ==='1'"
+                          <button
+                            v-if="comment.userId == userId || userId === '1'"
                             type="button"
                             class="btn btn-box-tool"
                             data-widget="remove"
@@ -189,6 +195,12 @@
 <script>
 import NavBar from "../components/NavBar.vue";
 import axios from "axios";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
+import localizedDate from "dayjs/plugin/localizedFormat";
+dayjs.extend(localizedDate);
+
 
 export default {
   name: "AccueilView",
@@ -342,6 +354,13 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    //Gestion des dates
+    diffForHumans(timestamp) {
+      return dayjs(timestamp).fromNow();
+    },
+    humanFriendlyDate(timestamp) {
+      return dayjs(timestamp).format("llll");
     },
   },
 };
