@@ -1,11 +1,11 @@
 <template>
     <div class="alert alert-danger" role="alerte">
-        {{ error }}
+        {{ e }}
     </div>
 </template>
 <script>
 export default {
     name: 'ErrorMsg',
-    props: ['error']
+    props: ['e']
 }
 </script>

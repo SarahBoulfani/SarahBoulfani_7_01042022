@@ -31,7 +31,7 @@
     <form @submit.prevent="login" class="form-signin">
       <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
       <!-- Si il ya une erreur -->
-          <ErrorMsg v-if="error" :error="error"/>
+          <ErrorMsg v-if="e" :e="e"/>
       <div class="form-floating">
         <input
           type="email"
@@ -75,7 +75,7 @@ export default {
     return {
       email: "",
       password: "",
-      error:''
+      e:''
     };
   },
   methods: {
@@ -94,9 +94,9 @@ export default {
           this.$router.push("/ProfilView");
         })
 
-        .catch((error) => {
-          console.log(error);
-          this.error='Email et/ou mot de passe incorrect(s)'
+        .catch((e) => {
+          console.log(e);
+          this.e='Email et/ou mot de passe incorrect(s)'
         });
     },
   },
