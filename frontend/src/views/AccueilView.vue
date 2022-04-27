@@ -33,7 +33,7 @@
                       type="file"
                       @change="uploadFile"
                     />
-                    <label class="label-post" for="formFile"
+                    <label class="label-post btn-form" for="formFile"
                       ><i class="fas fa-camera"> Image</i></label
                     >
                   </div>
@@ -88,7 +88,7 @@
                 </button>
                 <!-- bouton suppression post -->
                 <button
-                  v-if="post.userId == userId || userId === '1'"
+                  v-if="post.userId == userId || isAdmin == true "
                   type="button"
                   class="btn btn-box-tool"
                   data-widget="remove"
@@ -129,7 +129,7 @@
                           >{{ diffForHumans(comment.createdAt) }}
                           <!-- bouton suppression commentaire -->
                           <button
-                            v-if="comment.userId == userId || userId === '1'"
+                            v-if="comment.userId == userId || isAdmin == true "
                             type="button"
                             class="btn btn-box-tool"
                             data-widget="remove"
@@ -200,6 +200,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 import localizedDate from "dayjs/plugin/localizedFormat";
 dayjs.extend(localizedDate);
+require('dayjs/locale/fr')
 
 
 export default {
@@ -223,6 +224,7 @@ export default {
       posts: [],
       comment: "",
       comments: [],
+      isAdmin:""
     };
   },
 
@@ -232,9 +234,11 @@ export default {
     axios
       .get(`http://localhost:3000/api/user/${id}`)
       .then((response) => {
+        console.log(response);
         this.firstname = response.data.firstname;
         this.lastname = response.data.lastname;
         this.image = response.data.image;
+        this.isAdmin= response.data.isAdmin
       })
       .catch((error) => {
         console.log(error);
@@ -339,7 +343,6 @@ export default {
         });
     },
     //Supprimer un commentaire
-    //Supprimer un post
     deleteComment(id) {
       axios
         .delete(`http://localhost:3000/api/comment/${id}`, {
@@ -355,12 +358,12 @@ export default {
           console.log(error);
         });
     },
-    //Gestion des dates
+    //Gestion des dates de publication
     diffForHumans(timestamp) {
-      return dayjs(timestamp).fromNow();
+      return dayjs(timestamp).locale('fr').fromNow();
     },
     humanFriendlyDate(timestamp) {
-      return dayjs(timestamp).format("llll");
+      return dayjs(timestamp).locale('fr').format("llll");
     },
   },
 };
@@ -400,7 +403,7 @@ input[type="file"] {
 }
 .box {
   position: relative;
-  border-radius: 3px;
+  border-radius: 30px;
   background: #ffffff;
   border-top: 3px solid #d2d6de;
   margin-bottom: 20px;

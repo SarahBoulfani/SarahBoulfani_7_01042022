@@ -7,6 +7,7 @@
           <!-- Profile picture card-->
           <div class="card mb-4 mb-xl-0">
             <div class="card-header">Hi, {{ firstname }} {{ lastname }}</div>
+
             <div class="card-body text-center">
               <!-- Profile picture image-->
               <img
@@ -15,16 +16,18 @@
                 alt="Photo de profil"
               />
               <!-- Profile picture help block-->
-
+              <!--  Rôle admin -->
+              <p class="text-danger role" v-if="isAdmin == true">
+                Rôle: Modérateur
+              </p>
               <div class="formFile">
-               
                 <input
                   class="form-control"
                   id="formFile"
                   type="file"
                   @change="selectFile"
                 />
-                 <label class="label-post" for="formFile"
+                <label class="label-post btn-form p-2" for="formFile"
                   ><i class="fas fa-camera"> Changer votre photo</i></label
                 >
               </div>
@@ -37,7 +40,9 @@
             <div class="card-header">Modifier vos informations</div>
             <div class="card-body">
               <form>
-                <!-- Form Row-->
+                <!-- Form -->
+                <!-- Ajout date d'inscription -->
+                 <p class="date">Membre depuis le : {{humanFriendlyDate(createdAt)}}</p>
                 <div class="gx-3 mb-3">
                   <!-- Form Group (first name)-->
                   <div class="col-md-6">
@@ -62,11 +67,12 @@
                       id="inputLastName"
                       type="text"
                       :placeholder="lastname"
-                       v-model="newLastname"
+                      v-model="newLastname"
                     />
                   </div>
                 </div>
                 <div class="col-xl-4">
+                 
                   <!-- Save changes button-->
                   <button
                     @click="modifyUser()"
@@ -76,7 +82,7 @@
                     Enregistrer
                   </button>
                   <!-- Profile delete-->
-                  <button @click="deleteUser()" class="btn btn-danger">
+                  <button @click="deleteUser()" class="btn btn-danger ">
                     Supprimer mon compte
                   </button>
                 </div>
@@ -91,6 +97,11 @@
 <script>
 import axios from "axios";
 import NavBar from "../components/NavBar.vue";
+import dayjs from "dayjs";
+import localizedDate from "dayjs/plugin/localizedFormat";
+dayjs.extend(localizedDate);
+require('dayjs/locale/fr')
+
 export default {
   name: "ProfilView",
   components: {
@@ -104,6 +115,8 @@ export default {
       userId: localStorage.getItem("userId"),
       newFirstname: "",
       newLastname: "",
+      isAdmin: "",
+      createdAt:""
     };
   },
 
@@ -116,6 +129,8 @@ export default {
         this.firstname = response.data.firstname;
         this.lastname = response.data.lastname;
         this.image = response.data.image;
+        this.createdAt= response.data.createdAt;
+        this.isAdmin = response.data.isAdmin;
       })
       .catch((error) => {
         console.log(error);
@@ -130,7 +145,8 @@ export default {
       const formData = new FormData();
       formData.append("image", this.image);
 
-     axios.put(`http://localhost:3000/api/user/${id}`, formData, {
+      axios
+        .put(`http://localhost:3000/api/user/${id}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: "Bearer " + localStorage.getItem("token"),
@@ -145,14 +161,15 @@ export default {
           console.log(error);
         });
     },
-    //modifier les informations du user
+    //Modifier les informations du user
     modifyUser() {
-       const id = localStorage.getItem("userId");
+      const id = localStorage.getItem("userId");
       const formData = new FormData();
       formData.append("firstname", this.newFirstname);
-       formData.append("lastname", this.newLastname);
+      formData.append("lastname", this.newLastname);
 
-     axios.put(`http://localhost:3000/api/user/${id}`, formData, {
+      axios
+        .put(`http://localhost:3000/api/user/${id}`, formData, {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
@@ -166,14 +183,14 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-     
     },
     //Supprimer le compte
-    deleteUser(){
+    deleteUser() {
       //TO DO ajouter une confirmation avant suppression
-    const id = localStorage.getItem("userId");
-    
-     axios.delete(`http://localhost:3000/api/user/${id}`, {
+      const id = localStorage.getItem("userId");
+
+      axios
+        .delete(`http://localhost:3000/api/user/${id}`, {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
@@ -182,15 +199,16 @@ export default {
           console.log(response);
           localStorage.clear();
           alert("Votre compte a été supprimer");
-          this.$router.push('/')
-          
+          this.$router.push("/");
         })
         .catch((error) => {
           console.log(error);
         });
-     
-     
-    }
+    },
+    //Gestion date
+     humanFriendlyDate(timestamp) {
+      return dayjs(timestamp).locale('fr').format("LLLL");
+    },
   },
 };
 </script>
@@ -204,9 +222,7 @@ export default {
 
 body {
   font-family: "Poppins", sans-serif;
-  background-color:#eae9e7;
-   /* background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpUhXdCNmsP00fvCtI_TvYa_NrXedilm2oyw&usqp=CAU");
-   background-size: cover; */
+  background-color: #eae9e7;
 }
 .img-account-profile {
   height: 10rem;
@@ -215,6 +231,7 @@ body {
   border-radius: 50% !important;
 }
 .card {
+  border-radius: 30px;
   box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
 }
 .card .card-header {
@@ -250,5 +267,18 @@ body {
 
 .btn-form {
   margin: 7px;
+  border-radius: 30px;
+  cursor: pointer;
+
+}
+.role{
+  font-weight: 800;
+  margin: 15px;
+}
+.date{
+  font-weight: 800;
+}
+.btn{
+  border-radius: 30px;
 }
 </style>
