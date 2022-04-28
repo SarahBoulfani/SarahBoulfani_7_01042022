@@ -27,9 +27,13 @@
         </div>
       </div>
     </nav>
+    <!-- description -->
+    <div class=" description text-center">
+      <p>Bienvenue sur votre réseau social d'entreprise </p>
+    </div>
     <!-- form -->
     <form @submit.prevent="signup" class="form-signin">
-      <h1 class="h3 mb-3 fw-normal">Inscrivez-vous</h1>
+      <h1 class=" text-center h3 mb-3 fw-normal">Inscrivez-vous</h1>
       <!-- erreur back -->
       <ErrorMsg v-if="e" :e="e" />
 
@@ -84,6 +88,7 @@
       <button class="w-100 btn btn-lg btn-primary" type="submit">
         Inscription
       </button>
+      <p class="mt-2 text-center">Vous avez déja un compte <router-link class="nav-link" to="/LoginView"> Connectez-vous </router-link></p>
     </form>
   </div>
 </template>
@@ -164,17 +169,7 @@ export default {
           "Votre mot de passe doit contenir au moins 6 caractères, dont un chiffre, une minuscule et une majuscule";
       }
       console.log("errors", this.error);
-      //Validation du formulaire
-      /*  if (!this.userRegex.test(this.firstname)) {
-        return (this.error = 'Prénom non valide');
-        } else if (!this.userRegex.test(this.lastname)) {
-        return (this.error = 'Nom non valide');
-        } else if (!this.emailRegex.test(this.email)) {
-        return (this.error = 'Email non valide');
-        } else if (!this.passwordRegex.test(this.password)) {
-        return (this.error = 'Votre mot de passe doit contenir au moins 6 caractères, dont un chiffre, une minuscule et une majuscule');
-        } */
-      //Inscription
+    
     },
   },
 };
@@ -182,4 +177,8 @@ export default {
 
 
 <style>
+.description{
+  font-size: 20px;
+ font-weight: 600;
+}
 </style>

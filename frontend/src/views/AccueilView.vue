@@ -78,14 +78,16 @@
                 >
               </div>
               <div class="box-tools">
+                
                 <!-- Bouton modification -->
-                <button
+              <!--   <button
                   type="button"
                   class="btn btn-box-tool"
                   data-widget="remove"
                 >
                   <i class="fa fa-refresh" aria-hidden="true"></i>
-                </button>
+                </button> -->
+
                 <!-- bouton suppression post -->
                 <button
                   v-if="post.userId == userId || isAdmin == true "
@@ -122,10 +124,10 @@
                       :src="comment.User.image"
                       alt="User Image"
                     />
-                    <div class="comment-text">
-                      <span class="username">
+                    <div class="comment-text ">
+                      <span class="username d-flex justify-content-between">
                         {{ comment.User.firstname }} {{ comment.User.lastname }}
-                        <span class="text-muted pull-right" :title="humanFriendlyDate(comment.createdAt)"
+                        <span class="text-muted pull-right " :title="humanFriendlyDate(comment.createdAt)"
                           >{{ diffForHumans(comment.createdAt) }}
                           <!-- bouton suppression commentaire -->
                           <button
@@ -411,7 +413,7 @@ input[type="file"] {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 .box-header.with-border {
-  border-bottom: 1px solid #f4f4f4;
+  border-bottom: 1px solid #dcdbdb;
 }
 .box-header {
   color: #444;
@@ -426,11 +428,11 @@ input[type="file"] {
 }
 .user-block .username {
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 600;  
 }
 .user-block .description {
   color: #999;
-  font-size: 13px;
+  font-size: 13px;  
 }
 .user-block .username,
 .user-block .description,

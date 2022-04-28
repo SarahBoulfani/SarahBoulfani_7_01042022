@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+  <nav class="navbar navbar-expand-md mb-4">
     <div class="container-fluid">
       <div class="logo">
         <router-link to="#" class="navbar-brand" href="#"
@@ -13,7 +13,7 @@
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
             <router-link to="/AccueilView" class="nav-link active" href="#"
-              >Accueil</router-link
+              ><img class="img-profil" src="../assets/home-page.jpg" alt="icon page d'accueil"></router-link
             >
           </li>
            <li class="nav-item">
@@ -71,6 +71,9 @@ export default {
 </script>
 
 <style lang="scss">
+.navbar{
+  background: #14213d !important;
+}
 .logo {
   img {
     object-fit: cover;
@@ -85,7 +88,31 @@ export default {
 }
 .img-deconnect{
   height: 29px;
+   border-radius: 50%;
   
+}
+.container-fluid{
+   @media screen and (max-width: 767px) {
+   display: flex;
+   flex-direction: column !important;
+   align-items: center;
+  }
+}
+.navbar-nav {
+   @media screen and (max-width: 767px) {
+   display: flex;
+   flex-direction: row !important;
+   margin: 5px;
+
+  }
+  li{
+  @media screen and (max-width: 770px) {
+   align-items: center;
+   margin: 5px;
+
+  }
+   
+  }
 }
 
 </style>
