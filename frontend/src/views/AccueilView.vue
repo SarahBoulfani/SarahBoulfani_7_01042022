@@ -110,12 +110,21 @@
 
               <hr />
             </div>
+<!-- _____________________________________ -->
+            <!-- nombre de commentaire-->
+            
+            <TotalComment :postId="post.id"/>
+            
+
             <!-- Commentaire -->
             <div
               v-for="comment in comments"
               :key="comment.id"
               style="display: block"
             >
+               
+   
+            
               <div v-if="comment.postId === post.id">
                 <div class="box-footer box-comments">
                   <div class="box-comment">
@@ -196,6 +205,7 @@
 
 <script>
 import NavBar from "../components/NavBar.vue";
+import TotalComment from "../components/TotalComment.vue";
 import axios from "axios";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -209,6 +219,7 @@ export default {
   name: "AccueilView",
   components: {
     NavBar,
+    TotalComment
   },
 
   data() {
@@ -226,7 +237,8 @@ export default {
       posts: [],
       comment: "",
       comments: [],
-      isAdmin:""
+      isAdmin:"",
+      totalComments:[],
     };
   },
 
@@ -260,6 +272,12 @@ export default {
       });
 
     this.getComment();
+   
+
+   
+    
+    
+    
   },
   methods: {
     //Téléchargement d'image
@@ -296,6 +314,8 @@ export default {
         })
         .then((response) => {
           this.comments = response.data.comment;
+   
+      
           console.log(response);
         })
         .catch((error) => {
@@ -322,6 +342,7 @@ export default {
           .then((response) => {
             console.log(response);
             this.getComment();
+            window.location.reload()
           })
           .catch((error) => {
             console.log(error);
@@ -367,7 +388,11 @@ export default {
     humanFriendlyDate(timestamp) {
       return dayjs(timestamp).locale('fr').format("llll");
     },
+  
+    
+   
   },
+  
 };
 </script>
 
