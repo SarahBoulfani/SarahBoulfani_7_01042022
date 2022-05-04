@@ -198,6 +198,8 @@
         </div>
       </div>
     </div>
+     <!-- footer -->
+    <FooterView/>
   </main>
 </template>
 
@@ -206,6 +208,7 @@
 <script>
 import NavBar from "../components/NavBar.vue";
 import TotalComment from "../components/TotalComment.vue";
+import FooterView from '../components/FooterView.vue'
 import axios from "axios";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -219,7 +222,8 @@ export default {
   name: "AccueilView",
   components: {
     NavBar,
-    TotalComment
+    TotalComment,
+    FooterView
   },
 
   data() {
@@ -543,6 +547,7 @@ input[type="file"] {
 }
 .img-post {
   max-width: 100%;
+  height: 100%;
 }
 .content {
   margin: 10px;

@@ -90,16 +90,20 @@
       </button>
       <p class="mt-2 text-center">Vous avez déja un compte <router-link class="nav-link" to="/LoginView"> Connectez-vous </router-link></p>
     </form>
+    <!-- footer -->
+    <FooterView/>
   </div>
 </template>
 <script>
 import axios from "axios";
 import ErrorMsg from "../components/ErrorMsg";
+import FooterView from '../components/FooterView.vue';
 
 export default {
   name: "SignupView",
   components: {
     ErrorMsg,
+    FooterView
   },
 
   data() {

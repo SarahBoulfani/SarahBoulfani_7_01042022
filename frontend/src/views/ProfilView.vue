@@ -92,11 +92,14 @@
         </div>
       </div>
     </div>
+     <!-- footer -->
+    <FooterView class="footer-login" />
   </div>
 </template>
 <script>
 import axios from "axios";
 import NavBar from "../components/NavBar.vue";
+import FooterView from '../components/FooterView.vue'
 import dayjs from "dayjs";
 import localizedDate from "dayjs/plugin/localizedFormat";
 dayjs.extend(localizedDate);
@@ -106,6 +109,7 @@ export default {
   name: "ProfilView",
   components: {
     NavBar,
+    FooterView
   },
   data() {
     return {

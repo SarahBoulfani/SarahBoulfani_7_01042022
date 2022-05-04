@@ -58,17 +58,21 @@
         Connexion
       </button>
     </form>
+      <!-- footer -->
+    <FooterView class="footer-login"/>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import ErrorMsg from '../components/ErrorMsg';
+import FooterView from '../components/FooterView.vue'
 
 export default {
   name: "LoginView",
   components:{
-    ErrorMsg
+    ErrorMsg,
+    FooterView
   },
 
   data() {
@@ -102,4 +106,9 @@ export default {
   },
 };
 </script>
+<style>
+ .footer-login{
+    bottom: 0;
+ }
+</style>
 
