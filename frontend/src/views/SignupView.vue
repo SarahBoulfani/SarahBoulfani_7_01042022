@@ -91,7 +91,7 @@
       <p class="mt-2 text-center">Vous avez déja un compte <router-link class="nav-link" to="/LoginView"> Connectez-vous </router-link></p>
     </form>
     <!-- footer -->
-    <FooterView class="footer-login"/>
+    <FooterView/>
   </div>
 </template>
 <script>
