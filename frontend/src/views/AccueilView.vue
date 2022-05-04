@@ -68,7 +68,7 @@
                   alt="User Image"
                 />
                 <!-- Info user  -->
-                <span class="username"
+                <span class="username text-truncate"
                   >{{ post.User.firstname }} {{ post.User.lastname }}</span
                 >
                 <span
@@ -134,9 +134,9 @@
                       alt="User Image"
                     />
                     <div class="comment-text ">
-                      <span class="username d-flex justify-content-between">
+                      <span class="username text-truncate d-flex justify-content-between">
                         {{ comment.User.firstname }} {{ comment.User.lastname }}
-                        <span class="text-muted pull-right " :title="humanFriendlyDate(comment.createdAt)"
+                        <span class="text-muted text-truncate pull-right " :title="humanFriendlyDate(comment.createdAt)"
                           >{{ diffForHumans(comment.createdAt) }}
                           <!-- bouton suppression commentaire -->
                           <button
@@ -169,7 +169,7 @@
                   <input
                     v-model="comment"
                     type="text"
-                    class="form-control"
+                    class="form-control text-truncate"
                     placeholder="Ajouter un commentaire..."
                     aria-label="Input comment"
                   />
@@ -457,11 +457,22 @@ input[type="file"] {
 }
 .user-block .username {
   font-size: 16px;
-  font-weight: 600;  
+  font-weight: 600; 
+   @media screen and (max-width: 700px) {
+    display: block !important;
+
+  } 
+}
+.username{
+   @media screen and (max-width: 700px) {
+    display: block !important;
+
+  }
 }
 .user-block .description {
   color: #999;
-  font-size: 13px;  
+  font-size: 13px;
+  font-weight: 600; 
 }
 .user-block .username,
 .user-block .description,
@@ -479,6 +490,10 @@ input[type="file"] {
   font-size: 12px;
   background: transparent;
   color: #97a0b3;
+   @media screen and (max-width: 700px) {
+    font-size: 10px;
+
+  }
 }
 .box-body {
   border-top-left-radius: 0;
@@ -530,13 +545,19 @@ input[type="file"] {
 }
 .box-comments .username {
   color: #444;
-  display: block;
   font-weight: 600;
+   
 }
 .box-comments .text-muted {
-  font-weight: 400;
+  display: block;
+  font-weight: 600;
   font-size: 12px;
+    @media screen and (max-width: 700px) {
+    font-size: 10px;
+
+  }
 }
+
 .img-sm + .img-push {
   margin-left: 40px;
 }

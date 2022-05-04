@@ -1,4 +1,5 @@
 <template>
+<header>
   <nav class="navbar navbar-expand-md mb-4">
     <div class="container-fluid">
       <div class="logo">
@@ -38,6 +39,7 @@
       </div>
     </div>
   </nav>
+  </header>
 </template>
 
 

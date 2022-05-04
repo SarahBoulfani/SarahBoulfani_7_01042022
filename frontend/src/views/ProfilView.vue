@@ -93,7 +93,7 @@
       </div>
     </div>
      <!-- footer -->
-    <FooterView class="footer-login" />
+    <FooterView class=" footer-profil" />
   </div>
 </template>
 <script>
@@ -217,7 +217,7 @@ export default {
 };
 </script>
 
-<style >
+<style lang="scss" >
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 * {
   margin: 0;
@@ -288,5 +288,10 @@ body {
 }
 .btn{
   border-radius: 30px;
+}
+.footer-profil{
+    @media screen and (min-width: 700px) {
+   bottom: 0;
+  }
 }
 </style>

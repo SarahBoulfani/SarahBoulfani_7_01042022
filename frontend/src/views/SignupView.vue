@@ -28,8 +28,8 @@
       </div>
     </nav>
     <!-- description -->
-    <div class=" description text-center">
-      <p>Bienvenue sur votre réseau social d'entreprise </p>
+    <div class="text-center">
+      <h1 class="description-title">Bienvenue sur votre réseau social d'entreprise </h1>
     </div>
     <!-- form -->
     <form @submit.prevent="signup" class="form-signin">
@@ -91,7 +91,7 @@
       <p class="mt-2 text-center">Vous avez déja un compte <router-link class="nav-link" to="/LoginView"> Connectez-vous </router-link></p>
     </form>
     <!-- footer -->
-    <FooterView/>
+    <FooterView class="footer-login"/>
   </div>
 </template>
 <script>
@@ -181,8 +181,8 @@ export default {
 
 
 <style>
-.description{
-  font-size: 20px;
- font-weight: 600;
+.description-title{
+  font-size: 20px !important;
+ font-weight: 600 !important;
 }
 </style>
