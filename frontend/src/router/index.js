@@ -3,6 +3,7 @@ import AccueilView from '../views/AccueilView.vue'
 import LoginView from '../views/LoginView.vue'
 import SignupView from '../views/SignupView.vue'
 import ProfilView from '../views/ProfilView.vue'
+import NotFoundPage from '../views/NotFoundPage.vue'
 
 const routes = [
 {
@@ -21,6 +22,11 @@ const routes = [
   path: "/ProfilView",
   component: ProfilView,
 },
+{
+path: "/:catchAll(.*)",
+component: NotFoundPage,
+},
+
 
 
  
