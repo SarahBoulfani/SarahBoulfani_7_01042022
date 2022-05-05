@@ -9,22 +9,37 @@ const routes = [
 {
   path: "/AccueilView",
   component: AccueilView,
+  meta:{
+    title:" Groupomania | Accueil"
+  }
 },
 {
   path: "/LoginView",
   component: LoginView,
+  meta:{
+    title:" Groupomania | Connexion"
+  }
 },
 {
   path: "/",
   component: SignupView,
+  meta:{
+    title:"Groupomania | Inscription"
+  }
 },
 {
   path: "/ProfilView",
   component: ProfilView,
+  meta:{
+    title:" Groupomania | Profil"
+  }
 },
 {
 path: "/:catchAll(.*)",
 component: NotFoundPage,
+meta:{
+  title:" 404 Not found"
+}
 },
 
 
@@ -35,6 +50,10 @@ component: NotFoundPage,
 const router = createRouter({
   history: createWebHashHistory(),
   routes
+});
+router.beforeEach((to, from, next)=>{
+  document.title = `${to.meta.title}`;
+  next();
 })
 
 export default router
