@@ -78,16 +78,6 @@
                 >
               </div>
               <div class="box-tools">
-                
-                <!-- Bouton modification -->
-              <!--   <button
-                  type="button"
-                  class="btn btn-box-tool"
-                  data-widget="remove"
-                >
-                  <i class="fa fa-refresh" aria-hidden="true"></i>
-                </button> -->
-
                 <!-- bouton suppression post -->
                 <button
                   v-if="post.userId == userId || isAdmin == true "
@@ -198,8 +188,6 @@
         </div>
       </div>
     </div>
-     <!-- footer -->
-    <FooterView/>
   </main>
 </template>
 
@@ -208,7 +196,6 @@
 <script>
 import NavBar from "../components/NavBar.vue";
 import TotalComment from "../components/TotalComment.vue";
-import FooterView from '../components/FooterView.vue'
 import axios from "axios";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -223,7 +210,6 @@ export default {
   components: {
     NavBar,
     TotalComment,
-    FooterView
   },
 
   data() {
@@ -276,12 +262,7 @@ export default {
       });
 
     this.getComment();
-   
-
-   
-    
-    
-    
+ 
   },
   methods: {
     //Téléchargement d'image
@@ -289,7 +270,9 @@ export default {
       this.file = event.target.files[0];
     },
     //Création post
+    
     createPost() {
+      if (this.content !== "") {
       const fd = new FormData();
       fd.append("userId", this.userId);
       fd.append("content", this.content);
@@ -307,6 +290,9 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+          }else{
+            alert('Veuillez ajouter un contenu à votre publication')
+          }
     },
     //Récupérer les commentaires
     getComment() {
@@ -326,6 +312,7 @@ export default {
           console.log(error);
         });
     },
+  
     //Ajouter un commentaire
     createComment(id) {
       if (this.comment != "") {
@@ -346,7 +333,7 @@ export default {
           .then((response) => {
             console.log(response);
             this.getComment();
-            window.location.reload()
+            window.location.reload(); 
           })
           .catch((error) => {
             console.log(error);
@@ -355,6 +342,7 @@ export default {
     },
     //Supprimer un post
     deletePost(id) {
+        if (confirm("Voulez vous vraiment supprimer votre post") == true) {
       axios
         .delete(`http://localhost:3000/api/post/${id}`, {
           headers: {
@@ -368,6 +356,7 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+        }
     },
     //Supprimer un commentaire
     deleteComment(id) {
@@ -384,6 +373,7 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+        
     },
     //Gestion des dates de publication
     diffForHumans(timestamp) {

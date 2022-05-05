@@ -42,7 +42,9 @@
               <form>
                 <!-- Form -->
                 <!-- Ajout date d'inscription -->
-                 <p class="date">Membre depuis le : {{humanFriendlyDate(createdAt)}}</p>
+                <p class="date">
+                  Membre depuis le : {{ humanFriendlyDate(createdAt) }}
+                </p>
                 <div class="gx-3 mb-3">
                   <!-- Form Group (first name)-->
                   <div class="col-md-6">
@@ -72,7 +74,6 @@
                   </div>
                 </div>
                 <div class="col-xl-4">
-                 
                   <!-- Save changes button-->
                   <button
                     @click="modifyUser()"
@@ -82,7 +83,7 @@
                     Enregistrer
                   </button>
                   <!-- Profile delete-->
-                  <button @click="deleteUser()" class="btn btn-danger ">
+                  <button @click="deleteUser()" class="btn btn-danger">
                     Supprimer mon compte
                   </button>
                 </div>
@@ -92,24 +93,24 @@
         </div>
       </div>
     </div>
-     <!-- footer -->
-    <FooterView class=" footer-profil" />
+    <!-- footer -->
+    <FooterView class="footer-profil" />
   </div>
 </template>
 <script>
 import axios from "axios";
 import NavBar from "../components/NavBar.vue";
-import FooterView from '../components/FooterView.vue'
+import FooterView from "../components/FooterView.vue";
 import dayjs from "dayjs";
 import localizedDate from "dayjs/plugin/localizedFormat";
 dayjs.extend(localizedDate);
-require('dayjs/locale/fr')
+require("dayjs/locale/fr");
 
 export default {
   name: "ProfilView",
   components: {
     NavBar,
-    FooterView
+    FooterView,
   },
   data() {
     return {
@@ -120,7 +121,7 @@ export default {
       newFirstname: "",
       newLastname: "",
       isAdmin: "",
-      createdAt:""
+      createdAt: "",
     };
   },
 
@@ -133,7 +134,7 @@ export default {
         this.firstname = response.data.firstname;
         this.lastname = response.data.lastname;
         this.image = response.data.image;
-        this.createdAt= response.data.createdAt;
+        this.createdAt = response.data.createdAt;
         this.isAdmin = response.data.isAdmin;
       })
       .catch((error) => {
@@ -167,51 +168,57 @@ export default {
     },
     //Modifier les informations du user
     modifyUser() {
-      const id = localStorage.getItem("userId");
-      const formData = new FormData();
-      formData.append("firstname", this.newFirstname);
-      formData.append("lastname", this.newLastname);
+    if (this.newFirstname !== "" && this.newLastname !== "") {
+        const id = localStorage.getItem("userId");
+        const formData = new FormData();
+        formData.append("firstname", this.newFirstname);
+        formData.append("lastname", this.newLastname);
 
-      axios
-        .put(`http://localhost:3000/api/user/${id}`, formData, {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        })
-        .then((response) => {
-          console.log(response);
-          this.newFirstname = response.data.firstname;
-          this.newLastname = response.data.lastname;
-          window.location.reload();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        axios
+          .put(`http://localhost:3000/api/user/${id}`, formData, {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          })
+          .then((response) => {
+            console.log(response);
+            this.newFirstname = response.data.firstname;
+            this.newLastname = response.data.lastname;
+            window.location.reload();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    }else {
+        alert("Veuillez remplir les champs");
+      }
     },
     //Supprimer le compte
     deleteUser() {
-      //TO DO ajouter une confirmation avant suppression
-      const id = localStorage.getItem("userId");
+      //TODO ajouter une confirmation avant suppression
+      if (confirm("Voulez vous vraiment supprimer votre compte") == true) {
+        const id = localStorage.getItem("userId");
 
-      axios
-        .delete(`http://localhost:3000/api/user/${id}`, {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        })
-        .then((response) => {
-          console.log(response);
-          localStorage.clear();
-          alert("Votre compte a été supprimer");
-          this.$router.push("/");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        axios
+          .delete(`http://localhost:3000/api/user/${id}`, {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          })
+          .then((response) => {
+            console.log(response);
+            localStorage.clear();
+            alert("Votre compte a été supprimer");
+            this.$router.push("/");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
     //Gestion date
-     humanFriendlyDate(timestamp) {
-      return dayjs(timestamp).locale('fr').format("LLLL");
+    humanFriendlyDate(timestamp) {
+      return dayjs(timestamp).locale("fr").format("LLLL");
     },
   },
 };
@@ -219,10 +226,6 @@ export default {
 
 <style lang="scss" >
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
-* {
-  margin: 0;
-  padding: 0;
-}
 
 body {
   font-family: "Poppins", sans-serif;
@@ -239,20 +242,18 @@ body {
   box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
 }
 .card .card-header {
-  
   font-weight: 500;
 }
 .card-header:first-child {
   border-radius: 0.35rem 0.35rem 0 0;
 }
 .card-header {
-  border-top-right-radius:  30px !important;
-  border-top-left-radius:  30px !important;
+  border-top-right-radius: 30px !important;
+  border-top-left-radius: 30px !important;
   padding: 1rem 1.35rem;
   margin-bottom: 0;
   background-color: rgba(33, 40, 50, 0.03);
   border-bottom: 1px solid rgba(33, 40, 50, 0.125);
-  
 }
 .form-control,
 .dataTable-input {
@@ -277,21 +278,20 @@ body {
   margin: 7px;
   border-radius: 30px;
   cursor: pointer;
-
 }
-.role{
+.role {
   font-weight: 800;
   margin: 15px;
 }
-.date{
+.date {
   font-weight: 800;
 }
-.btn{
+.btn {
   border-radius: 30px;
 }
-.footer-profil{
-    @media screen and (min-width: 700px) {
-   bottom: 0;
+.footer-profil {
+  @media screen and (min-width: 700px) {
+    bottom: 0;
   }
 }
 </style>
