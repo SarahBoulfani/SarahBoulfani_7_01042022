@@ -159,15 +159,15 @@ export default {
       this.error = [];
       //firstname
       if (!this.userRegex.test(this.firstname)) {
-        this.error.firstname = "prénom non valide";
+        this.error.firstname = "Prénom non valide, que les caractères minuscules et majuscules sont autorisés";
       }
       //lastname
       if (!this.userRegex.test(this.lastname)) {
-        this.error.lastname = "nom non valide";
+        this.error.lastname = "Nom non valide, que les caractères minuscules et majuscules sont autorisés";
       }
       //email
       if (!this.emailRegex.test(this.email)) {
-        this.error.email = "mail non valide";
+        this.error.email = "L'email que vous avez entré est non valide. Veuillez vérifier votre email et essayer à nouveau.";
       }
       //password
       if (!this.passwordRegex.test(this.password)) {

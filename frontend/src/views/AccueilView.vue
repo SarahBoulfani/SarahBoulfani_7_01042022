@@ -86,7 +86,7 @@
                   class="btn btn-box-tool"
                   data-widget="remove"
                   @click="deletePost(post.id)"
-                  title="Supprimer le post"
+                  aria-label="Supprimer le post"
                 >
                   <i class="fa fa-times"></i>
                 </button>
@@ -134,7 +134,7 @@
                             class="btn btn-box-tool"
                             data-widget="remove"
                             @click="deleteComment(comment.id)"
-                            title="Supprimer le commentaire"
+                            aria-label="Supprimer le commentaire"
                           >
                             <i class="fa fa-times"></i></button
                         ></span>
@@ -255,7 +255,7 @@ export default {
         },
       })
       .then((response) => {
-        console.log(response);
+        //console.log(response);
         this.posts = response.data.post;
       })
       .catch((error) => {
@@ -305,9 +305,7 @@ export default {
         })
         .then((response) => {
           this.comments = response.data.comment;
-   
-      
-          console.log(response);
+         // console.log(response);
         })
         .catch((error) => {
           console.log(error);
@@ -331,8 +329,8 @@ export default {
               },
             }
           )
-          .then((response) => {
-            console.log(response);
+          .then(() => {
+            //console.log(response);
             this.getComment();
             window.location.reload(); 
           })
@@ -343,21 +341,19 @@ export default {
     },
     //Supprimer un post
     deletePost(id) {
-        if (confirm("Voulez vous vraiment supprimer votre post") == true) {
       axios
         .delete(`http://localhost:3000/api/post/${id}`, {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
         })
-        .then((response) => {
-          console.log(response);
+        .then(() => {
+          //console.log(response);
           window.location.reload();
         })
         .catch((error) => {
           console.log(error);
         });
-        }
     },
     //Supprimer un commentaire
     deleteComment(id) {
@@ -367,8 +363,8 @@ export default {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
         })
-        .then((response) => {
-          console.log(response);
+        .then(() => {
+         // console.log(response);
           window.location.reload();
         })
         .catch((error) => {
