@@ -6,7 +6,7 @@
       <img
         src="../assets/comment.png"
         class="img-deconnect"
-        alt="icon comment"
+        alt="Image commentaire"
       />
       {{ getTotalComment(postId) }} {{ totalComments }}
     </div>

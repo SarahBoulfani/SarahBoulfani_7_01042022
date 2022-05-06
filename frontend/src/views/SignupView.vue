@@ -27,13 +27,14 @@
         </div>
       </div>
     </nav>
+    <main>
     <!-- description -->
     <div class="text-center">
       <h1 class="description-title">Bienvenue sur votre réseau social d'entreprise </h1>
     </div>
     <!-- form -->
     <form @submit.prevent="signup" class="form-signin">
-      <h1 class=" text-center h3 mb-3 fw-normal">Inscrivez-vous</h1>
+      <h2 class=" text-center h4 mb-3 fw-normal">Inscrivez-vous</h2>
       <!-- erreur back -->
       <ErrorMsg v-if="e" :e="e" />
 
@@ -85,11 +86,12 @@
       <!-- error message -->
       <p class="text-danger" v-if="error">{{ error.password }}</p>
 
-      <button class="w-100 btn btn-lg btn-primary" type="submit">
+      <button class="w-100 btn btn-lg btn-primary" type="submit" aria-label="Inscription">
         Inscription
       </button>
       <p class="mt-2 text-center">Vous avez déja un compte <router-link class="nav-link" to="/LoginView"> Connectez-vous </router-link></p>
     </form>
+    </main>
     <!-- footer -->
     <FooterView/>
   </div>
@@ -143,7 +145,7 @@ export default {
           .catch((e) => {
            
             if(e.response.status === 400){
-              this.e = "cet adresse email est deja utilisée!";
+              this.e = "cet adresse email est déja utilisée!";
             }else{
                    this.e = e.response.data;
             }
@@ -182,7 +184,7 @@ export default {
 
 <style>
 .description-title{
-  font-size: 20px !important;
+  font-size: 22px !important;
  font-weight: 600 !important;
 }
 </style>

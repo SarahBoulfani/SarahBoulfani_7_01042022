@@ -28,8 +28,9 @@
       </div>
     </nav>
     <!-- form -->
+    <main>
     <form @submit.prevent="login" class="form-signin">
-      <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+      <h2 class="h4 mb-3 text-center fw-normal">Connectez-vous</h2>
       <!-- Si il ya une erreur -->
           <ErrorMsg v-if="e" :e="e"/>
       <div class="form-floating">
@@ -54,10 +55,11 @@
         <label for="floatingPassword">Password</label>
       </div>
 
-      <button class="w-100 btn btn-lg btn-primary" type="submit">
+      <button class="w-100 btn btn-lg btn-primary" type="submit" aria-label="Connexion">
         Connexion
       </button>
     </form>
+    </main>
       <!-- footer -->
     <FooterView class="footer-login"/>
   </div>
@@ -108,7 +110,8 @@ export default {
 </script>
 <style>
  .footer-login{
-    bottom: 0;
+    margin-top: 137px;
+    
  }
 </style>
 

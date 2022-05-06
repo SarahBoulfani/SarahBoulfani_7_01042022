@@ -1,6 +1,6 @@
 <template>
   <footer class="footer text-center text-white">
-    <p class="text-center p-3">
+    <p class="text-center copyright p-4">
       {{ copyright }} | All Rights Reserved | Powered with 💕
     </p>
   </footer>
@@ -24,9 +24,17 @@ export default {
 };
 </script>
 <style lang="scss" >
-.footer {
+.footer .copyright {
   background: #14213d !important;
+  margin-top: 40px;
+  font-size:15px;
+ 
+
+}
+.copyright{
+  position:absolute ;
   width: 100%;
-  position: absolute;
+   margin-bottom:0 !important;
+ 
 }
 </style>

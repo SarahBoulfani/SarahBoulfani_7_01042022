@@ -1,6 +1,7 @@
 <template>
   <div>
     <NavBar />
+    <main>
     <div class="container-xl px-4 mt-4">
       <div class="row">
         <div class="col-xl-4">
@@ -76,6 +77,7 @@
                 <div class="col-xl-4">
                   <!-- Save changes button-->
                   <button
+                    aria-label="Modifier vos informations"
                     @click="modifyUser()"
                     class="btn-form btn btn-primary"
                     type="submit"
@@ -83,7 +85,7 @@
                     Enregistrer
                   </button>
                   <!-- Profile delete-->
-                  <button @click="deleteUser()" class="btn btn-danger">
+                  <button @click="deleteUser()" class="btn btn-danger" aria-label="Supprimer votre compte">
                     Supprimer mon compte
                   </button>
                 </div>
@@ -93,6 +95,7 @@
         </div>
       </div>
     </div>
+    </main>
     <!-- footer -->
     <FooterView class="footer-profil" />
   </div>

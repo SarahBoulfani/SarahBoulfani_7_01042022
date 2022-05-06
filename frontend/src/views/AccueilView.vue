@@ -43,6 +43,7 @@
                     <button
                       class="btn btn-post btn-primary m-2"
                       @click="createPost()"
+                      aria-label="Publier un post"
                     >
                       Publier
                     </button>
@@ -85,6 +86,7 @@
                   class="btn btn-box-tool"
                   data-widget="remove"
                   @click="deletePost(post.id)"
+                  title="Supprimer le post"
                 >
                   <i class="fa fa-times"></i>
                 </button>
@@ -96,15 +98,12 @@
             </p>
             <div class="box-body text-center" style="display: block">
               <!-- Image post -->
-              <img class="img-responsive img-post pad" :src="post.imageUrl" />
+              <img class="img-responsive img-post pad" :src="post.imageUrl" aria-label="Image post" />
 
               <hr />
             </div>
-<!-- _____________________________________ -->
             <!-- nombre de commentaire-->
-            
-            <TotalComment :postId="post.id"/>
-            
+                <TotalComment :postId="post.id"/>
 
             <!-- Commentaire -->
             <div
@@ -135,6 +134,7 @@
                             class="btn btn-box-tool"
                             data-widget="remove"
                             @click="deleteComment(comment.id)"
+                            title="Supprimer le commentaire"
                           >
                             <i class="fa fa-times"></i></button
                         ></span>
@@ -151,7 +151,7 @@
               <img
                 class="img-responsive rounded-circle img-sm"
                 :src="image"
-                alt="Alt Text"
+                alt="User image"
               />
               <div class="img-push">
                 <div class="input-group">
@@ -165,6 +165,7 @@
                   />
                   <!-- bouton commentaire -->
                   <button
+                    aria-label="Publier un commentaire"
                     class="input-group-text"
                     @click="createComment(post.id)"
                   >
@@ -291,7 +292,7 @@ export default {
           console.log(error);
         });
           }else{
-            alert('Veuillez ajouter un contenu à votre publication')
+            alert('Veuillez ajouter un texte à votre publication')
           }
     },
     //Récupérer les commentaires
@@ -381,10 +382,7 @@ export default {
     },
     humanFriendlyDate(timestamp) {
       return dayjs(timestamp).locale('fr').format("llll");
-    },
-  
-    
-   
+    }, 
   },
   
 };
