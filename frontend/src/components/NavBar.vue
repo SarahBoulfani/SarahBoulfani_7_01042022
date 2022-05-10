@@ -58,8 +58,7 @@ export default {
     axios
       .get(`http://localhost:3000/api/user/${id}`)
       .then((response) => {
-        console.log(response);
-
+        //console.log(response);
         this.image = response.data.image;
       })
       .catch((error) => {

@@ -136,8 +136,8 @@ export default {
             email: this.email,
             password: this.password,
           })
-          .then((response) => {
-            console.log(response);
+          .then(() => {
+           // console.log(response);
             //redirection vers la page Login
             this.$router.push("/LoginView");
             alert("Votre inscription est validé");
@@ -174,7 +174,7 @@ export default {
         this.error.password =
           "Votre mot de passe doit contenir au moins 6 caractères, dont un chiffre, une minuscule et une majuscule";
       }
-      console.log("errors", this.error);
+      //console.log("errors", this.error);
     
     },
   },

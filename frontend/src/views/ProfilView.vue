@@ -133,7 +133,7 @@ export default {
     axios
       .get(`http://localhost:3000/api/user/${id}`)
       .then((response) => {
-        console.log(response);
+        //console.log(response);
         this.firstname = response.data.firstname;
         this.lastname = response.data.lastname;
         this.image = response.data.image;
@@ -161,7 +161,7 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response);
+          //console.log(response);
           this.image = response.data.image;
           window.location.reload();
         })
@@ -184,7 +184,7 @@ export default {
             },
           })
           .then((response) => {
-            console.log(response);
+            //console.log(response);
             this.newFirstname = response.data.firstname;
             this.newLastname = response.data.lastname;
             window.location.reload();
@@ -208,8 +208,8 @@ export default {
               Authorization: "Bearer " + localStorage.getItem("token"),
             },
           })
-          .then((response) => {
-            console.log(response);
+          .then(() => {
+            //console.log(response);
             localStorage.clear();
             alert("Votre compte a été supprimer");
             this.$router.push("/");

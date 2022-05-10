@@ -103,7 +103,10 @@
               <hr />
             </div>
             <!-- nombre de commentaire-->
+            <div class="d-flex align-items-center">
+                <LikePost />
                 <TotalComment :postId="post.id"/>
+                </div>
 
             <!-- Commentaire -->
             <div
@@ -112,8 +115,6 @@
               style="display: block"
             >
                
-   
-            
               <div v-if="comment.postId === post.id">
                 <div class="box-footer box-comments">
                   <div class="box-comment">
@@ -122,7 +123,7 @@
                       :src="comment.User.image"
                       alt="User Image"
                     />
-                    <div class="comment-text ">
+                    <div class="comment-text">
                       <span class="username text-truncate d-flex justify-content-between">
                         {{ comment.User.firstname }} {{ comment.User.lastname }}
                         <span class="text-muted text-truncate pull-right " :title="humanFriendlyDate(comment.createdAt)"
@@ -202,6 +203,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 import localizedDate from "dayjs/plugin/localizedFormat";
+import LikePost from '../components/LikePost.vue';
 dayjs.extend(localizedDate);
 require('dayjs/locale/fr')
 
@@ -211,6 +213,7 @@ export default {
   components: {
     NavBar,
     TotalComment,
+    LikePost,
   },
 
   data() {
@@ -239,7 +242,7 @@ export default {
     axios
       .get(`http://localhost:3000/api/user/${id}`)
       .then((response) => {
-        console.log(response);
+        //console.log(response);
         this.firstname = response.data.firstname;
         this.lastname = response.data.lastname;
         this.image = response.data.image;

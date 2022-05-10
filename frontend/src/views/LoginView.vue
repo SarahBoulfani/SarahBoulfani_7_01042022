@@ -92,7 +92,7 @@ export default {
           password: this.password,
         })
         .then((response) => {
-          console.log(response);
+          //console.log(response);
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("userId", response.data.userId);
 
@@ -110,7 +110,7 @@ export default {
 </script>
 <style>
  .footer-login{
-    margin-top: 137px;
+    margin-top: 170px;
     
  }
 </style>

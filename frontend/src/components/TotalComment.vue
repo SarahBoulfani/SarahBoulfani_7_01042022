@@ -36,10 +36,8 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response);
+          //console.log(response);
           this.totalComments = response.data.length;
-
-          console.log(this.totalComments);
         })
         .catch((error) => {
           console.log(error);
@@ -51,7 +49,6 @@ export default {
 <style lang="scss">
 .comment {
   max-width: 50px;
-  margin-left: 30px;
   font-weight: 900;
 }
 </style>>

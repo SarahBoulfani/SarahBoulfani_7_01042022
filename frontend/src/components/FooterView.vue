@@ -26,15 +26,16 @@ export default {
 <style lang="scss" >
 .footer .copyright {
   background: #14213d !important;
-  margin-top: 40px;
-  font-size:15px;
- 
+  margin-top: 60px;
+  font-size: 15px;
+  //and (max-width: 1440px)
+    @media screen and (min-width: 500px)  {
+      //margin-top: 140px;
 
+  }
 }
-.copyright{
-  position:absolute ;
+.copyright {
   width: 100%;
-   margin-bottom:0 !important;
- 
+  margin: 0px !important;
 }
 </style>
