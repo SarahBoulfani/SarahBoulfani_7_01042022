@@ -26,8 +26,6 @@ From the "frontend" folder of the project, run `npm install`.
 You can then run the server with `npm run serve`.
 If your browser fails to launch, or shows a 404 error, navigate your browser to http://localhost:8080.
 
-## Admin ##
-To have the admin role you will need to change the value of isAdmin in the database to true.
 
 
 
