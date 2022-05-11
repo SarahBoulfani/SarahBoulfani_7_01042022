@@ -10,28 +10,28 @@ const routes = [
   path: "/AccueilView",
   component: AccueilView,
   meta:{
-    title:" Groupomania | Accueil"
+    title:"Accueil | Groupomania"
   }
 },
 {
   path: "/LoginView",
   component: LoginView,
   meta:{
-    title:" Groupomania | Connexion"
+    title:"Connexion | Groupomania"
   }
 },
 {
   path: "/",
   component: SignupView,
   meta:{
-    title:"Groupomania | Inscription"
+    title:"Inscription | Groupomania"
   }
 },
 {
   path: "/ProfilView",
   component: ProfilView,
   meta:{
-    title:" Groupomania | Profil"
+    title:"Profil | Groupomania"
   }
 },
 {
