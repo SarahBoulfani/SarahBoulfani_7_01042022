@@ -97,7 +97,7 @@
     </div>
     </main>
     <!-- footer -->
-    <FooterView class="footer-profil" />
+    <FooterView class="footer-profil footer-login" />
   </div>
 </template>
 <script>
@@ -292,9 +292,10 @@ body {
 .btn {
   border-radius: 30px;
 }
-.footer-profil {
-  @media screen and (min-width: 700px) {
-    bottom: 0;
-  }
+.footer-profil{
+   @media screen and (max-width: 1200px) {
+    display: none;
+  } 
 }
+
 </style>

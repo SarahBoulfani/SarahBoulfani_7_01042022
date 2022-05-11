@@ -24,18 +24,15 @@ export default {
 };
 </script>
 <style lang="scss" >
-.footer .copyright {
+.footer {
   background: #14213d !important;
-  margin-top: 60px;
   font-size: 15px;
-  //and (max-width: 1440px)
-    @media screen and (min-width: 500px)  {
-      //margin-top: 140px;
-
-  }
-}
-.copyright {
   width: 100%;
-  margin: 0px !important;
+   @media screen and (max-width: 770px)  {
+    display: none;
+  } 
+  p {
+    margin-bottom: 0 !important;
+  }
 }
 </style>

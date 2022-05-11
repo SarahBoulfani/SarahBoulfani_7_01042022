@@ -108,10 +108,10 @@ export default {
   },
 };
 </script>
-<style>
+<style lang="scss">
  .footer-login{
-    margin-top: 170px;
-    
+   bottom: 0;
+   position: absolute;   
  }
 </style>
 
