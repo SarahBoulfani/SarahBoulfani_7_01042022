@@ -102,9 +102,9 @@
 
               <hr />
             </div>
-            <!-- nombre de commentaire-->
+            <!-- nombre de commentaire et les likes-->
             <div class="d-flex align-items-center">
-                <LikePost />
+                <LikePost :postId="post.id" :userId="user.id"/>
                 <TotalComment :postId="post.id"/>
                 </div>
 
@@ -233,6 +233,7 @@ export default {
       comments: [],
       isAdmin:"",
       totalComments:[],
+      likes:[]
     };
   },
 

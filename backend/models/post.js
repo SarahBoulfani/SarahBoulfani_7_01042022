@@ -17,7 +17,11 @@ Post.belongsTo(models.User, {
 Post.hasMany(models.Comment, {
   foreignKey: 'postId',
   onDelete: 'cascade'
-})
+});
+Post.hasMany(models.Like, {
+  foreignKey: 'postId',
+  onDelete: 'cascade'
+});
 }; 
 return Post;
 }
