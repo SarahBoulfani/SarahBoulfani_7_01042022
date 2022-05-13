@@ -2,99 +2,111 @@
   <div>
     <NavBar />
     <main>
-    <div class="container-xl px-4 mt-4">
-      <div class="row">
-        <div class="col-xl-4">
-          <!-- Profile picture card-->
-          <div class="card mb-4 mb-xl-0">
-            <div class="card-header">Hi, {{ firstname }} {{ lastname }}</div>
+      <div class="container-xl px-4 mt-4">
+        <div class="row">
+          <div class="col-xl-4">
+            <!-- Profile picture card-->
+            <div class="card mb-4 mb-xl-0">
+              <div class="card-header">Hi, {{ firstname }} {{ lastname }}</div>
 
-            <div class="card-body text-center">
-              <!-- Profile picture image-->
-              <img
-                class="img-account-profile rounded-circle mb-2"
-                :src="image"
-                alt="Photo de profil"
-              />
-              <!-- Profile picture help block-->
-              <!--  Rôle admin -->
-              <p class="text-danger role" v-if="isAdmin == true">
-                Rôle: Modérateur
-              </p>
-              <div class="formFile">
-                <input
-                  class="form-control"
-                  id="formFile"
-                  type="file"
-                  @change="selectFile"
+              <div class="card-body text-center">
+                <!-- Profile picture image-->
+                <img
+                  class="img-account-profile rounded-circle mb-2"
+                  :src="image"
+                  alt="Photo de profil"
                 />
-                <label class="label-post btn-form p-2" for="formFile"
-                  ><i class="fas fa-camera"> Changer votre photo</i></label
-                >
+                <!-- Profile picture help block-->
+                <!--  Rôle admin -->
+                <p class="text-danger role" v-if="isAdmin == true">
+                  Rôle: Modérateur
+                </p>
+                <div class="formFile">
+                  <input
+                    class="form-control"
+                    id="formFile"
+                    type="file"
+                    @change="selectFile"
+                  />
+                  <label class="label-post btn-form p-2" for="formFile"
+                    ><i class="fas fa-camera"> Changer votre photo</i></label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-8">
+            <!-- Account details card-->
+            <div class="card mb-4">
+              <div class="card-header">Modifier vos informations</div>
+              <div class="card-body">
+                <form>
+                  <!-- Form -->
+                  <!-- Ajout date d'inscription -->
+                  <p class="date">
+                    Membre depuis le : {{ humanFriendlyDate(createdAt) }}
+                  </p>
+                  <div class="gx-3 mb-3">
+                    <!-- Form Group (first name)-->
+                    <div class="col-md-6">
+                      <label class="small mb-1" for="inputFirstName"
+                        >First name</label
+                      >
+                      <input
+                        class="form-control"
+                        id="inputFirstName"
+                        type="text"
+                        :placeholder="firstname"
+                        v-model="newFirstname"
+                      />
+                      <!-- error message -->
+                      <p class="text-danger small" v-if="error">
+                        {{ error.newFirstname }}
+                      </p>
+                    </div>
+                    <!-- Form Group (last name)-->
+                    <div class="col-md-6">
+                      <label class="small mb-1" for="inputLastName"
+                        >Last name</label
+                      >
+                      <input
+                        class="form-control"
+                        id="inputLastName"
+                        type="text"
+                        :placeholder="lastname"
+                        v-model="newLastname"
+                      />
+                      <!-- error message -->
+                      <p class="text-danger small" v-if="error">
+                        {{ error.newLastname }}
+                      </p>
+                    </div>
+                  </div>
+                  <div class="col-xl-4">
+                    <!-- Save changes button-->
+                    <button
+                      aria-label="Modifier vos informations"
+                      @click="modifyUser()"
+                      class="btn-form btn btn-primary"
+                      type="submit"
+                    >
+                      Enregistrer
+                    </button>
+                    <!-- Profile delete-->
+                    <button
+                      @click="deleteUser()"
+                      class="btn btn-danger"
+                      aria-label="Supprimer votre compte"
+                    >
+                      Supprimer mon compte
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-xl-8">
-          <!-- Account details card-->
-          <div class="card mb-4">
-            <div class="card-header">Modifier vos informations</div>
-            <div class="card-body">
-              <form>
-                <!-- Form -->
-                <!-- Ajout date d'inscription -->
-                <p class="date">
-                  Membre depuis le : {{ humanFriendlyDate(createdAt) }}
-                </p>
-                <div class="gx-3 mb-3">
-                  <!-- Form Group (first name)-->
-                  <div class="col-md-6">
-                    <label class="small mb-1" for="inputFirstName"
-                      >First name</label
-                    >
-                    <input
-                      class="form-control"
-                      id="inputFirstName"
-                      type="text"
-                      :placeholder="firstname"
-                      v-model="newFirstname"
-                    />
-                  </div>
-                  <!-- Form Group (last name)-->
-                  <div class="col-md-6">
-                    <label class="small mb-1" for="inputLastName"
-                      >Last name</label
-                    >
-                    <input
-                      class="form-control"
-                      id="inputLastName"
-                      type="text"
-                      :placeholder="lastname"
-                      v-model="newLastname"
-                    />
-                  </div>
-                </div>
-                <div class="col-xl-4">
-                  <!-- Save changes button-->
-                  <button
-                    aria-label="Modifier vos informations"
-                    @click="modifyUser()"
-                    class="btn-form btn btn-primary"
-                    type="submit"
-                  >
-                    Enregistrer
-                  </button>
-                  <!-- Profile delete-->
-                  <button @click="deleteUser()" class="btn btn-danger" aria-label="Supprimer votre compte">
-                    Supprimer mon compte
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
       </div>
-    </div>
     </main>
     <!-- footer -->
     <FooterView class="footer-profil footer-login" />
@@ -125,6 +137,8 @@ export default {
       newLastname: "",
       isAdmin: "",
       createdAt: "",
+      error: "",
+      userRegex: /^[a-zA-Zàâäéèêëïîôöùûüÿç-]+$/,
     };
   },
 
@@ -171,7 +185,10 @@ export default {
     },
     //Modifier les informations du user
     modifyUser() {
-    if (this.newFirstname !== "" && this.newLastname !== "") {
+      if (
+        this.userRegex.test(this.newFirstname) &&
+        this.userRegex.test(this.newLastname)
+      ) {
         const id = localStorage.getItem("userId");
         const formData = new FormData();
         formData.append("firstname", this.newFirstname);
@@ -192,10 +209,20 @@ export default {
           .catch((error) => {
             console.log(error);
           });
-    }else {
-        alert("Veuillez remplir les champs");
+      }
+      this.error = [];
+      //firstname
+      if (!this.userRegex.test(this.newFirstname)) {
+        this.error.newFirstname =
+          "Prénom non valide";
+      }
+      //lastname
+      if (!this.userRegex.test(this.newLastname)) {
+        this.error.newLastname =
+          "Nom non valide";
       }
     },
+
     //Supprimer le compte
     deleteUser() {
       //TODO ajouter une confirmation avant suppression
@@ -217,6 +244,24 @@ export default {
           .catch((error) => {
             console.log(error);
           });
+      }
+    },
+    //verif input
+    verifInput() {
+      if (
+        this.userRegex.test(this.newFirstname) &&
+        this.userRegex.test(this.newLastname)
+      )
+        this.error = [];
+      //firstname
+      if (!this.userRegex.test(this.newFirstname)) {
+        this.error.newFirstname =
+          "Prénom non valide, que les caractères minuscules et majuscules sont autorisés";
+      }
+      //lastname
+      if (!this.userRegex.test(this.newLastname)) {
+        this.error.newLastname =
+          "Nom non valide, que les caractères minuscules et majuscules sont autorisés";
       }
     },
     //Gestion date
@@ -292,10 +337,10 @@ body {
 .btn {
   border-radius: 30px;
 }
-.footer-profil{
-   @media screen and (max-width: 1200px) {
+.footer-profil {
+  @media screen and (max-width: 1200px) {
     display: none;
-  } 
+  }
 }
 
 </style>
