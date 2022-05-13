@@ -1,10 +1,12 @@
 <template>
   <div>
     <button v-if="!liked" class="like">
-      <i class="far fa-heart" @click="createLike(postId)"></i> {{likes.length}} 
+      <i class="far fa-heart" @click="createLike(postId)"></i>
+      {{ likes.length }}
     </button>
     <button v-else class="like">
-      <i class="fas fa-heart text-danger" @click="deleteLike(postId)"></i> {{likes.length}}
+      <i class="fas fa-heart text-danger" @click="deleteLike(postId)"></i>
+      {{ likes.length }}
     </button>
   </div>
 </template>
@@ -20,17 +22,18 @@ export default {
       userId: localStorage.getItem("userId"),
       liked: null,
       likes: [],
-      
+      like: "",
     };
   },
-    mounted() {
-       this.getLike(this.postId)
+  mounted() {
+    this.getLike(this.postId);
   },
   methods: {
     /* toggleLike() {
       this.liked = !this.liked;
       this.liked ? this.likesCount++ : this.likesCount--;
     }, */
+
     //Ajout d'un like
 
     createLike() {
@@ -61,14 +64,14 @@ export default {
       this.liked = true;
     },
     //disliker un post
-    
     deleteLike(postId) {
+      console.log(this.likes);
       axios
         .delete(
           `http://localhost:3000/api/post/${postId}/dislike`,
-           {
-             like: false,
-             userId: this.userId,  
+          {
+            like: false,
+            userId: this.userId,
           },
           {
             headers: {
@@ -78,10 +81,13 @@ export default {
         )
         .then((response) => {
           console.log(response);
-            this.likes = this.likes.filter((like) => like.userId != this.userId)
-            this.liked = false
-          window.location.reload();
-          
+          //this.likes.push(response.data);
+          this.likes = this.likes.filter((like) => like.userId != this.userId);
+          // this.likes.push(response.data);
+          //this.getLike(postId)
+          //console.log(this.likes);
+          this.liked = false;
+          //window.location.reload();
         })
         .catch((error) => {
           console.log(error);
@@ -89,30 +95,27 @@ export default {
     },
 
     //Récupérer les likes
-     getLike(postId) {
-      
+    getLike(postId) {
       axios
-        .get(
-          `http://localhost:3000/api/post/${postId}/likes`,
-          {
-            headers: {
-              Authorization: "Bearer " + localStorage.getItem("token"),
-            },
-          }
-        )
+        .get(`http://localhost:3000/api/post/${postId}/likes`, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
         .then((response) => {
           console.log(response);
           const datalike = response.data;
-          datalike.forEach(like => {
-            like.userId == this.userId ? this.liked = true : this.like = false
+          datalike.forEach((like) => {
+            like.userId == this.userId
+              ? (this.liked = true)
+              : (this.like = false);
           });
+
           this.likes = datalike;
-        
         })
         .catch((error) => {
           console.log(error);
         });
-      
     },
   },
 };
