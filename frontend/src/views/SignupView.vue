@@ -35,9 +35,9 @@
     <!-- form -->
     <form @submit.prevent="signup" class="form-signin">
       <h2 class=" text-center h4 mb-3 fw-normal">Inscrivez-vous</h2>
-      <!-- erreur back -->
+      <!-- error back -->
       <ErrorMsg v-if="e" :e="e" />
-
+           <!-- First name -->
       <div class="form-floating">
         <input
           type="text"
@@ -49,7 +49,7 @@
       </div>
       <!-- error message -->
       <p class="text-danger" v-if="error">{{ error.firstname }}</p>
-
+          <!-- Last name -->
       <div class="form-floating">
         <input
           type="text"
@@ -61,7 +61,7 @@
       </div>
       <!-- error message -->
       <p class="text-danger" v-if="error">{{ error.lastname }}</p>
-
+         <!-- Email-->
       <div class="form-floating">
         <input
           type="email"
@@ -73,7 +73,7 @@
       </div>
       <!-- error message -->
       <p class="text-danger" v-if="error">{{ error.email }}</p>
-
+         <!-- Password -->
       <div class="form-floating">
         <input
           type="password"
@@ -85,11 +85,11 @@
       </div>
       <!-- error message -->
       <p class="text-danger" v-if="error">{{ error.password }}</p>
-
+         <!-- Bouton inscription -->
       <button class="w-100 btn btn-lg btn-primary" type="submit" aria-label="Inscription">
         Inscription
       </button>
-      <p class="mt-2 text-center">Vous avez déja un compte <router-link class="nav-link" to="/LoginView"> Connectez-vous </router-link></p>
+      <p class="mt-2 text-center">Vous avez déjà un compte <router-link class="nav-link" to="/LoginView"> Connectez-vous </router-link></p>
     </form>
     </main>
   </div>
@@ -143,13 +143,8 @@ export default {
             if(e.response.status === 400){
               this.e = "cet adresse email est déja utilisée!";
             }else{
-                   this.e = e.response.data;
+              this.e = e.response.data;
             }
-          
-            
-             
-            
-     
           });
       }
       this.error = [];
@@ -179,6 +174,22 @@ export default {
 
 
 <style>
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input{
+  margin-bottom: 20px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
 .description-title{
   font-size: 22px !important;
  font-weight: 600 !important;

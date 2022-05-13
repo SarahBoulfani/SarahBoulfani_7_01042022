@@ -1,7 +1,7 @@
 <template>
-  <main>
+<div>
     <NavBar />
-
+    <main>
     <div class="card-width container">
       <div class="px-4 mt-5">
         <!-- User info-->
@@ -54,9 +54,7 @@
           </div>
         </div>
       </div>
-
       <!-- post -->
-
       <div class="px-4 mt-5" v-for="post in posts" :key="post.id">
         <div class="col-md">
           <div class="box box-widget">
@@ -99,7 +97,6 @@
             <div class="box-body text-center" style="display: block">
               <!-- Image post -->
               <img class="img-responsive img-post pad" :src="post.imageUrl" aria-label="Image post" />
-
               <hr />
             </div>
             <!-- nombre de commentaire et les likes-->
@@ -107,14 +104,12 @@
                 <LikePost :postId="post.id" :userId="user.id"/>
                 <TotalComment :postId="post.id"/>
                 </div>
-
             <!-- Commentaire -->
             <div
               v-for="comment in comments"
               :key="comment.id"
               style="display: block"
-            >
-               
+            >   
               <div v-if="comment.postId === post.id">
                 <div class="box-footer box-comments">
                   <div class="box-comment">
@@ -146,8 +141,7 @@
                 </div>
               </div>
             </div>
-
-            <!-- ajouter un commentaire -->
+            <!-- Ajouter un commentaire -->
             <div class="box-footer" style="display: block">
               <img
                 class="img-responsive rounded-circle img-sm"
@@ -191,9 +185,8 @@
       </div>
     </div>
   </main>
+  </div>
 </template>
-
-
 
 <script>
 import NavBar from "../components/NavBar.vue";
@@ -206,7 +199,6 @@ import localizedDate from "dayjs/plugin/localizedFormat";
 import LikePost from '../components/LikePost.vue';
 dayjs.extend(localizedDate);
 require('dayjs/locale/fr')
-
 
 export default {
   name: "AccueilView",
@@ -274,8 +266,7 @@ export default {
     uploadFile(event) {
       this.file = event.target.files[0];
     },
-    //Création post
-    
+    //Création post  
     createPost() {
       if (this.content !== "") {
       const fd = new FormData();

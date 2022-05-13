@@ -31,8 +31,9 @@
     <main>
     <form @submit.prevent="login" class="form-signin">
       <h2 class="h4 mb-3 text-center fw-normal">Connectez-vous</h2>
-      <!-- Si il ya une erreur -->
-          <ErrorMsg v-if="e" :e="e"/>
+      <!-- Error message -->
+        <ErrorMsg v-if="e" :e="e"/>
+        <!-- Email -->
       <div class="form-floating">
         <input
           type="email"
@@ -43,7 +44,7 @@
         />
         <label for="floatingInput">Email</label>
       </div>
-
+          <!-- Password -->
       <div class="form-floating">
         <input
           type="password"
@@ -54,7 +55,7 @@
         />
         <label for="floatingPassword">Password</label>
       </div>
-
+         <!-- Bouton connexion -->
       <button class="w-100 btn btn-lg btn-primary" type="submit" aria-label="Connexion">
         Connexion
       </button>

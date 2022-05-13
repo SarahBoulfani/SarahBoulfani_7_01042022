@@ -4,20 +4,19 @@
     <main>
       <div class="container-xl px-4 mt-4">
         <div class="row">
-          <div class="col-xl-4">
-            <!-- Profile picture card-->
+          <div class="col-xl-4">            
+            <!-- Card photo de profil-->
             <div class="card mb-4 mb-xl-0">
               <div class="card-header">Hi, {{ firstname }} {{ lastname }}</div>
-
               <div class="card-body text-center">
-                <!-- Profile picture image-->
+                <!-- Photo de profil-->
                 <img
                   class="img-account-profile rounded-circle mb-2"
                   :src="image"
                   alt="Photo de profil"
                 />
-                <!-- Profile picture help block-->
-                <!--  Rôle admin -->
+                <!--Block photo de profil-->
+                <!--  Rôle -->
                 <p class="text-danger role" v-if="isAdmin == true">
                   Rôle: Modérateur
                 </p>
@@ -36,7 +35,8 @@
             </div>
           </div>
           <div class="col-xl-8">
-            <!-- Account details card-->
+
+            <!-- Détails card-->
             <div class="card mb-4">
               <div class="card-header">Modifier vos informations</div>
               <div class="card-body">
@@ -47,7 +47,7 @@
                     Membre depuis le : {{ humanFriendlyDate(createdAt) }}
                   </p>
                   <div class="gx-3 mb-3">
-                    <!-- Form Group (first name)-->
+                    <!-- Form (first name)-->
                     <div class="col-md-6">
                       <label class="small mb-1" for="inputFirstName"
                         >First name</label
@@ -64,7 +64,7 @@
                         {{ error.newFirstname }}
                       </p>
                     </div>
-                    <!-- Form Group (last name)-->
+                    <!-- Form (last name)-->
                     <div class="col-md-6">
                       <label class="small mb-1" for="inputLastName"
                         >Last name</label
@@ -83,7 +83,7 @@
                     </div>
                   </div>
                   <div class="col-xl-4">
-                    <!-- Save changes button-->
+                    <!-- Bouton modif user-->
                     <button
                       aria-label="Modifier vos informations"
                       @click="modifyUser()"
@@ -92,7 +92,7 @@
                     >
                       Enregistrer
                     </button>
-                    <!-- Profile delete-->
+                    <!-- bouton delete profil-->
                     <button
                       @click="deleteUser()"
                       class="btn btn-danger"
@@ -225,7 +225,6 @@ export default {
 
     //Supprimer le compte
     deleteUser() {
-      //TODO ajouter une confirmation avant suppression
       if (confirm("Voulez vous vraiment supprimer votre compte") == true) {
         const id = localStorage.getItem("userId");
 
@@ -246,25 +245,8 @@ export default {
           });
       }
     },
-    //verif input
-    verifInput() {
-      if (
-        this.userRegex.test(this.newFirstname) &&
-        this.userRegex.test(this.newLastname)
-      )
-        this.error = [];
-      //firstname
-      if (!this.userRegex.test(this.newFirstname)) {
-        this.error.newFirstname =
-          "Prénom non valide, que les caractères minuscules et majuscules sont autorisés";
-      }
-      //lastname
-      if (!this.userRegex.test(this.newLastname)) {
-        this.error.newLastname =
-          "Nom non valide, que les caractères minuscules et majuscules sont autorisés";
-      }
-    },
-    //Gestion date
+
+    //Gestion date d'inscription
     humanFriendlyDate(timestamp) {
       return dayjs(timestamp).locale("fr").format("LLLL");
     },

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button v-if="!liked" class="like">
+    <button v-if="!liked" class="like" aria-label="Ajouter un like">
       <i class="far fa-heart" @click="createLike(postId)"></i>
       {{ likes.length }}
     </button>
@@ -29,13 +29,7 @@ export default {
     this.getLike(this.postId);
   },
   methods: {
-    /* toggleLike() {
-      this.liked = !this.liked;
-      this.liked ? this.likesCount++ : this.likesCount--;
-    }, */
-
     //Ajout d'un like
-
     createLike() {
       const postId = this.post;
       axios
@@ -63,6 +57,7 @@ export default {
         });
       this.liked = true;
     },
+    
     //disliker un post
     deleteLike(postId) {
       console.log(this.likes);
