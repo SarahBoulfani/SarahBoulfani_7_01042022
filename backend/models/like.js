@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
         },
 
     });
-
+    //Les associations pour le model like
     Like.associate = models => {
         Like.belongsTo(models.User, {
             foreignKey: 'userId',

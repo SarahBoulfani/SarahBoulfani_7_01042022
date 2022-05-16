@@ -2,7 +2,7 @@
 const http = require('http');
 //Importer notre application
 const app = require('./app');
-//La fonction normalizePort renvoie un port valide, qu'il soit fourni sous la forme d'un numéro ou d'une chaîne
+
 const normalizePort = val => {
   const port = parseInt(val, 10);
 

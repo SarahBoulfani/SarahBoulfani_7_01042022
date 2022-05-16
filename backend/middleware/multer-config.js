@@ -8,20 +8,19 @@ const MIME_TYPES = {
   'image/gif': 'gif',
   'image/webp': 'webp'
 };
-//Créer un objet de configuration pour multer"storage", et utiliser la fonction diskStorage de multer pour lui dire qu'on va le stocker sur le disque, l'objet de configuration a besoin de 2 éléments distination et filename 
+//Utiliser la fonction diskStorage de multer qui a besoin de 2 éléments distination et filename 
 const storage = multer.diskStorage({
   //distination: une fonction qui va expliquer à multer dans quel dossier enregister les fichiers 
   destination: (req, file, callback) => {
-    callback(null, 'images'); //null pour dire qu'il n ya pas d'erreur, nom de dossier en deuxiéme argument
+    callback(null, 'images'); 
   },
-  //filename: pour dire à multer quel nom de fichier utilisé, car si on utilise le nom d'origine on risque d'avoir deux fichiers avec le meme nom par exemple
+  //filename: pour dire à multer quel nom de fichier utilisé
   filename: (req, file, callback) => {
-    const name = file.originalname.split(' ').join('_');//Genérer le nouveau nom et éliminer les espace grace à split et les remplacer par des underscore grace à la methode join
+    const name = file.originalname.split(' ').join('_');//Genérer le nouveau nom
     const fileName = name.split('.');
-    const extension = MIME_TYPES[file.mimetype]; //Utiliser les mime-types pour générer l'extention des images car on a pas accés au extention des fichiers envoyé
-    //appel du fichier par son nom complet: name + timestamp +'.' +extension du fichier
+    const extension = MIME_TYPES[file.mimetype]; //Utiliser les mime-types pour générer l'extention des images
     callback(null, fileName[0] + Date.now() + '.' + extension);//Appeler le callback pour crée le nom au complet 
   }
 });
-//Exporter le middleware multer configuré en passant l'objet storage
-module.exports = multer({ storage: storage }).single('image');//single pour dire qu'il s'agit d'un fichier unique et pas un ensemble de fichiers
+
+module.exports = multer({ storage: storage }).single('image');

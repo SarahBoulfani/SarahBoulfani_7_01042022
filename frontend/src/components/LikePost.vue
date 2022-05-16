@@ -4,7 +4,7 @@
       <i class="far fa-heart" @click="createLike(postId)"></i>
       {{ likes.length }}
     </button>
-    <button v-else class="like">
+    <button v-else class="like" aria-label="Supprimer un like">
       <i class="fas fa-heart text-danger" @click="deleteLike(postId)"></i>
       {{ likes.length }}
     </button>
@@ -22,7 +22,6 @@ export default {
       userId: localStorage.getItem("userId"),
       liked: null,
       likes: [],
-      like: "",
     };
   },
   mounted() {
@@ -80,7 +79,7 @@ export default {
           this.likes = this.likes.filter((like) => like.userId != this.userId);
           // this.likes.push(response.data);
           //this.getLike(postId)
-          //console.log(this.likes);
+          console.log(this.likes);
           this.liked = false;
           //window.location.reload();
         })
@@ -98,7 +97,7 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response);
+         // console.log(response);
           const datalike = response.data;
           datalike.forEach((like) => {
             like.userId == this.userId

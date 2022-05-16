@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
         },
 
     });
-
+    //Les associations pour le model comment
     Comment.associate = models => {
         Comment.belongsTo(models.User, {
             foreignKey: 'userId',
