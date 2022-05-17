@@ -5,7 +5,7 @@
       {{ likes.length }}
     </button>
     <button v-else class="like" aria-label="Supprimer un like">
-      <i class="fas fa-heart heart text-danger"  @click="deleteLike(postId)"></i>
+      <i class="fas fa-heart heart text-danger" @click="deleteLike(postId)"></i>
       {{ likes.length }}
     </button>
   </div>
@@ -21,7 +21,7 @@ export default {
     return {
       userId: localStorage.getItem("userId"),
       liked: null,
-      likes: []
+      likes: [],
     };
   },
   mounted() {
@@ -58,35 +58,33 @@ export default {
 
     //disliker un post
     deleteLike(postId) {
-     // console.log(this.likes, this.userId);
-          axios
-            .post(
-              `http://localhost:3000/api/post/${postId}/like`,
-              {
-                like: false,
-                userId: this.userId,
-                postId:this.postId 
-              },
-              {
-                headers: {
-                 'Content-Type' : 'application/json',
-                  Authorization: "Bearer " + localStorage.getItem("token"),
-                },
-              }
-            )
-            .then(() => {
-              //console.log(response);
-              this.likes = this.likes.filter(
-                (like) => like.userId != this.userId
-              );
-             // console.log(this.likes);
-              this.liked = false;
-             // window.location.reload();
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-    }, 
+      // console.log(this.likes, this.userId);
+      axios
+        .post(
+          `http://localhost:3000/api/post/${postId}/like`,
+          {
+            like: false,
+            userId: this.userId,
+            postId: this.postId,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        )
+        .then(() => {
+          //console.log(response);
+          this.likes = this.likes.filter((like) => like.userId != this.userId);
+          // console.log(this.likes);
+          this.liked = false;
+          // window.location.reload();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
 
     //Récupérer les likes
     getLike(postId) {
@@ -126,19 +124,18 @@ export default {
   background-color: white;
 }
 
-.heart:hover{
-  animation: heart-animation .5s ease-in-out ;
+.heart:hover {
+  animation: heart-animation 0.5s ease-in-out;
 }
 
 @keyframes heart-animation {
   0% {
-   transform: scale(1);
+    transform: scale(1);
   }
   30% {
     transform: scale(1.2);
   }
   50% {
-    
     transform: scale(1.5);
   }
   70% {
@@ -154,5 +151,4 @@ export default {
     transform: scale(1);
   }
 }
-
 </style>

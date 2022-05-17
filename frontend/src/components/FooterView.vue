@@ -28,9 +28,9 @@ export default {
   background: #14213d !important;
   font-size: 15px;
   width: 100%;
-   @media screen and (max-width: 770px)  {
+  @media screen and (max-width: 770px) {
     display: none;
-  } 
+  }
   p {
     margin-bottom: 0 !important;
   }

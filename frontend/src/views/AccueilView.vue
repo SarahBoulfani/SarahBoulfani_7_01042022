@@ -1,190 +1,204 @@
 <template>
-<div>
+  <div>
     <NavBar />
     <main>
-    <div class="card-width container">
-      <div class="px-4 mt-5">
-        <!-- User info-->
-        <div class="card mb-4">
-          <div class="card-header">
-            <img
-              :src="image"
-              alt="Photo de profil"
-              class="avatar rounded-circle"
-            />Hi, {{ firstname }}
-          </div>
-          <div class="card-body">
-            <form>
-              <div>
-                <!-- Publication-->
-                <textarea
-                  class="form-control"
-                  placeholder="Quoi de neuf ?"
-                  v-model="content"
-                >
-                </textarea>
+      <div class="card-width container">
+        <div class="px-4 mt-5">
+          <!-- User info-->
+          <div class="card mb-4">
+            <div class="card-header">
+              <img
+                :src="image"
+                alt="Photo de profil"
+                class="avatar rounded-circle"
+              />Hi, {{ firstname }}
+            </div>
+            <div class="card-body">
+              <form>
+                <div>
+                  <!-- Publication-->
+                  <textarea
+                    class="form-control"
+                    placeholder="Quoi de neuf ?"
+                    v-model="content"
+                  >
+                  </textarea>
 
-                <!-- Upload image-->
-                <div class="d-flex">
-                  <div class="formFile">
-                    <input
-                      id="formFile"
-                      accept="image/*"
-                      type="file"
-                      @change="uploadFile"
-                    />
-                    <label class="label-post btn-form" for="formFile"
-                      ><i class="fas fa-camera"> Image</i></label
-                    >
-                  </div>
+                  <!-- Upload image-->
+                  <div class="d-flex">
+                    <div class="formFile">
+                      <input
+                        id="formFile"
+                        accept="image/*"
+                        type="file"
+                        @change="uploadFile"
+                      />
+                      <label class="label-post btn-form" for="formFile"
+                        ><i class="fas fa-camera"> Image</i></label
+                      >
+                    </div>
 
-                  <div class="col-xl-4">
-                    <!-- Bouton publier-->
-                    <button
-                      class="btn btn-post btn-primary m-2"
-                      @click="createPost()"
-                      aria-label="Publier un post"
-                    >
-                      Publier
-                    </button>
+                    <div class="col-xl-4">
+                      <!-- Bouton publier-->
+                      <button
+                        class="btn btn-post btn-primary m-2"
+                        @click="createPost()"
+                        aria-label="Publier un post"
+                      >
+                        Publier
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-      <!-- post -->
-      <div class="px-4 mt-5" v-for="post in posts" :key="post.id">
-        <div class="col-md">
-          <div class="box box-widget">
-            <div class="box-header with-border">
-              <div class="user-block">
-                <!-- Image user-->
-                <img
-                  class="rounded-circle"
-                  :src="post.User.image"
-                  alt="User Image"
-                />
-                <!-- Info user  -->
-                <span class="username text-truncate"
-                  >{{ post.User.firstname }} {{ post.User.lastname }}</span
-                >
-                <span
-                  class="description"
-                  :title="humanFriendlyDate(post.createdAt)"
-                  >{{ diffForHumans(post.createdAt) }}</span
-                >
-              </div>
-              <div class="box-tools">
-                <!-- bouton suppression post -->
-                <button
-                  v-if="post.userId == userId || isAdmin == true "
-                  type="button"
-                  class="btn btn-box-tool"
-                  data-widget="remove"
-                  @click="deletePost(post.id)"
-                  aria-label="Supprimer le post"
-                >
-                  <i class="fa fa-times"></i>
-                </button>
-              </div>
-            </div>
-            <!-- Contenu post -->
-            <p class="content">
-              {{ post.content }}
-            </p>
-            <div class="box-body text-center" style="display: block">
-              <!-- Image post -->
-              <img class="img-responsive img-post pad" :src="post.imageUrl" aria-label="Image post" />
-              <hr />
-            </div>
-            <!-- nombre de commentaire et les likes-->
-            <div class="d-flex align-items-center">
-                <LikePost :postId="post.id" :userId="user.id"/>
-                <TotalComment :postId="post.id"/>
+        <!-- post -->
+        <div class="px-4 mt-5" v-for="post in posts" :key="post.id">
+          <div class="col-md">
+            <div class="box box-widget">
+              <div class="box-header with-border">
+                <div class="user-block">
+                  <!-- Image user-->
+                  <img
+                    class="rounded-circle"
+                    :src="post.User.image"
+                    alt="User Image"
+                  />
+                  <!-- Info user  -->
+                  <span class="username text-truncate"
+                    >{{ post.User.firstname }} {{ post.User.lastname }}</span
+                  >
+                  <span
+                    class="description"
+                    :title="humanFriendlyDate(post.createdAt)"
+                    >{{ diffForHumans(post.createdAt) }}</span
+                  >
                 </div>
-            <!-- Commentaire -->
-            <div
-              v-for="comment in comments"
-              :key="comment.id"
-              style="display: block"
-            >   
-              <div v-if="comment.postId === post.id">
-                <div class="box-footer box-comments">
-                  <div class="box-comment">
-                    <img
-                      class="rounded-circle img-sm"
-                      :src="comment.User.image"
-                      alt="User Image"
-                    />
-                    <div class="comment-text">
-                      <span class="username text-truncate d-flex justify-content-between">
-                        {{ comment.User.firstname }} {{ comment.User.lastname }}
-                        <span class="text-muted text-truncate pull-right " :title="humanFriendlyDate(comment.createdAt)"
-                          >{{ diffForHumans(comment.createdAt) }}
-                          <!-- bouton suppression commentaire -->
-                          <button
-                            v-if="comment.userId == userId || isAdmin == true "
-                            type="button"
-                            class="btn btn-box-tool"
-                            data-widget="remove"
-                            @click="deleteComment(comment.id)"
-                            aria-label="Supprimer le commentaire"
-                          >
-                            <i class="fa fa-times"></i></button
-                        ></span>
-                      </span>
-                      {{ comment.textComment }}
+                <div class="box-tools">
+                  <!-- bouton suppression post -->
+                  <button
+                    v-if="post.userId == userId || isAdmin == true"
+                    type="button"
+                    class="btn btn-box-tool"
+                    data-widget="remove"
+                    @click="deletePost(post.id)"
+                    aria-label="Supprimer le post"
+                  >
+                    <i class="fa fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- Contenu post -->
+              <p class="content">
+                {{ post.content }}
+              </p>
+              <div class="box-body text-center" style="display: block">
+                <!-- Image post -->
+                <img
+                  class="img-responsive img-post pad"
+                  :src="post.imageUrl"
+                  aria-label="Image post"
+                />
+                <hr />
+              </div>
+              <!-- nombre de commentaire et les likes-->
+              <div class="d-flex align-items-center">
+                <LikePost :postId="post.id" :userId="user.id" />
+                <TotalComment :postId="post.id" />
+              </div>
+              <!-- Commentaire -->
+              <div
+                v-for="comment in comments"
+                :key="comment.id"
+                style="display: block"
+              >
+                <div v-if="comment.postId === post.id">
+                  <div class="box-footer box-comments">
+                    <div class="box-comment">
+                      <img
+                        class="rounded-circle img-sm"
+                        :src="comment.User.image"
+                        alt="User Image"
+                      />
+                      <div class="comment-text">
+                        <span
+                          class="
+                            username
+                            text-truncate
+                            d-flex
+                            justify-content-between
+                          "
+                        >
+                          {{ comment.User.firstname }}
+                          {{ comment.User.lastname }}
+                          <span
+                            class="text-muted text-truncate pull-right"
+                            :title="humanFriendlyDate(comment.createdAt)"
+                            >{{ diffForHumans(comment.createdAt) }}
+                            <!-- bouton suppression commentaire -->
+                            <button
+                              v-if="comment.userId == userId || isAdmin == true"
+                              type="button"
+                              class="btn btn-box-tool"
+                              data-widget="remove"
+                              @click="deleteComment(comment.id)"
+                              aria-label="Supprimer le commentaire"
+                            >
+                              <i class="fa fa-times"></i></button
+                          ></span>
+                        </span>
+                        {{ comment.textComment }}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <!-- Ajouter un commentaire -->
-            <div class="box-footer" style="display: block">
-              <img
-                class="img-responsive rounded-circle img-sm"
-                :src="image"
-                alt="User image"
-              />
-              <div class="img-push">
-                <div class="input-group">
-                  <!-- Contenu commentaire -->
-                  <input
-                    v-model="comment"
-                    type="text"
-                    class="form-control text-truncate"
-                    placeholder="Ajouter un commentaire..."
-                    aria-label="Input comment"
-                  />
-                  <!-- bouton commentaire -->
-                  <button
-                    aria-label="Publier un commentaire"
-                    class="input-group-text"
-                    @click="createComment(post.id)"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      class="bi bi-chat"
-                      viewBox="0 0 16 16"
+              <!-- Ajouter un commentaire -->
+              <div class="box-footer" style="display: block">
+                <img
+                  class="img-responsive rounded-circle img-sm"
+                  :src="image"
+                  alt="User image"
+                />
+                <div class="img-push">
+                  <div class="input-group">
+                    <!-- Contenu commentaire -->
+                    <input
+                      v-model="comment"
+                      type="text"
+                      class="form-control text-truncate"
+                      placeholder="Ajouter un commentaire..."
+                      aria-label="Input comment"
+                    />
+                    <!-- bouton commentaire -->
+                    <button
+                      aria-label="Publier un commentaire"
+                      class="input-group-text"
+                      @click="createComment(post.id)"
                     >
-                      <path
-                        d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z"
-                      />
-                    </svg>
-                  </button>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-chat"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </main>
+    </main>
   </div>
 </template>
 
@@ -196,9 +210,9 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 import localizedDate from "dayjs/plugin/localizedFormat";
-import LikePost from '../components/LikePost.vue';
+import LikePost from "../components/LikePost.vue";
 dayjs.extend(localizedDate);
-require('dayjs/locale/fr')
+require("dayjs/locale/fr");
 
 export default {
   name: "AccueilView",
@@ -223,9 +237,9 @@ export default {
       posts: [],
       comment: "",
       comments: [],
-      isAdmin:"",
-      totalComments:[],
-      likes:[]
+      isAdmin: "",
+      totalComments: [],
+      likes: [],
     };
   },
 
@@ -239,7 +253,7 @@ export default {
         this.firstname = response.data.firstname;
         this.lastname = response.data.lastname;
         this.image = response.data.image;
-        this.isAdmin= response.data.isAdmin
+        this.isAdmin = response.data.isAdmin;
       })
       .catch((error) => {
         console.log(error);
@@ -259,36 +273,35 @@ export default {
       });
 
     this.getComment();
- 
   },
   methods: {
     //Téléchargement d'image
     uploadFile(event) {
       this.file = event.target.files[0];
     },
-    //Création post  
+    //Création post
     createPost() {
       if (this.content !== "") {
-      const fd = new FormData();
-      fd.append("userId", this.userId);
-      fd.append("content", this.content);
-      fd.append("imageUrl", this.file);
-      axios
-        .post("http://localhost:3000/api/post", fd, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        })
-        .then(() => {
-          window.location.reload();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-          }else{
-            alert('Veuillez ajouter un texte à votre publication')
-          }
+        const fd = new FormData();
+        fd.append("userId", this.userId);
+        fd.append("content", this.content);
+        fd.append("imageUrl", this.file);
+        axios
+          .post("http://localhost:3000/api/post", fd, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          })
+          .then(() => {
+            window.location.reload();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        alert("Veuillez ajouter un texte à votre publication");
+      }
     },
     //Récupérer les commentaires
     getComment() {
@@ -300,13 +313,13 @@ export default {
         })
         .then((response) => {
           this.comments = response.data.comment;
-         // console.log(response);
+          // console.log(response);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-  
+
     //Ajouter un commentaire
     createComment(id) {
       if (this.comment != "") {
@@ -327,7 +340,7 @@ export default {
           .then(() => {
             //console.log(response);
             this.getComment();
-            window.location.reload(); 
+            window.location.reload();
           })
           .catch((error) => {
             console.log(error);
@@ -359,23 +372,21 @@ export default {
           },
         })
         .then(() => {
-         // console.log(response);
+          // console.log(response);
           window.location.reload();
         })
         .catch((error) => {
           console.log(error);
         });
-        
     },
     //Gestion des dates de publication
     diffForHumans(timestamp) {
-      return dayjs(timestamp).locale('fr').fromNow();
+      return dayjs(timestamp).locale("fr").fromNow();
     },
     humanFriendlyDate(timestamp) {
-      return dayjs(timestamp).locale('fr').format("llll");
-    }, 
+      return dayjs(timestamp).locale("fr").format("llll");
+    },
   },
-  
 };
 </script>
 
@@ -436,22 +447,20 @@ input[type="file"] {
 }
 .user-block .username {
   font-size: 16px;
-  font-weight: 600; 
-   @media screen and (max-width: 700px) {
+  font-weight: 600;
+  @media screen and (max-width: 700px) {
     display: block !important;
-
-  } 
+  }
 }
-.username{
-   @media screen and (max-width: 700px) {
+.username {
+  @media screen and (max-width: 700px) {
     display: block !important;
-
   }
 }
 .user-block .description {
   color: #999;
   font-size: 13px;
-  font-weight: 600; 
+  font-weight: 600;
 }
 .user-block .username,
 .user-block .description,
@@ -469,11 +478,11 @@ input[type="file"] {
   font-size: 12px;
   background: transparent;
   color: #97a0b3;
-   @media screen and (max-width: 700px) {
+  @media screen and (max-width: 700px) {
     font-size: 10px;
   }
-    @media screen and (min-width: 769px) and (max-width: 920px)  {
-    display:block; 
+  @media screen and (min-width: 769px) and (max-width: 920px) {
+    display: block;
   }
 }
 .box-body {
@@ -527,15 +536,13 @@ input[type="file"] {
 .box-comments .username {
   color: #444;
   font-weight: 600;
-   
 }
 .box-comments .text-muted {
   display: block;
   font-weight: 600;
   font-size: 12px;
-    @media screen and (max-width: 700px) {
+  @media screen and (max-width: 700px) {
     font-size: 10px;
-
   }
 }
 
