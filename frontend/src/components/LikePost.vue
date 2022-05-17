@@ -59,14 +59,14 @@ export default {
 
     //disliker un post
     deleteLike(postId) {
-      console.log(this.likes, this.userId);
+     // console.log(this.likes, this.userId);
           axios
-            .delete(
-              `http://localhost:3000/api/post/${postId}/dislike`,
+            .post(
+              `http://localhost:3000/api/post/${postId}/like`,
               {
                 like: false,
                 userId: this.userId,
-               
+                postId:this.postId 
               },
               {
                 headers: {
@@ -75,19 +75,19 @@ export default {
                 },
               }
             )
-            .then((response) => {
-              console.log(response);
+            .then(() => {
+              //console.log(response);
               this.likes = this.likes.filter(
                 (like) => like.userId != this.userId
               );
-              console.log(this.likes);
+             // console.log(this.likes);
               this.liked = false;
-              //window.location.reload();
+              window.location.reload();
             })
             .catch((error) => {
               console.log(error);
             });
-    },
+    }, 
 
     //Récupérer les likes
     getLike(postId) {
