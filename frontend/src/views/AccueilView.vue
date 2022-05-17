@@ -101,7 +101,7 @@
             </div>
             <!-- nombre de commentaire et les likes-->
             <div class="d-flex align-items-center">
-                <LikePost :postId="post.id" :userId="user.id"/>
+                <LikePost :postId="post.id" :userId="userId"/>
                 <TotalComment :postId="post.id"/>
                 </div>
             <!-- Commentaire -->
