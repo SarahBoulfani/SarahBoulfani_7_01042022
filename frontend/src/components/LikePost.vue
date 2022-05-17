@@ -5,8 +5,7 @@
       {{ likes.length }}
     </button>
     <button v-else class="like" aria-label="Supprimer un like">
-      <!--  @click="deleteLike(postId)" -->
-      <i class="fas fa-heart text-danger"  @click="deleteLike(postId)"></i>
+      <i class="fas fa-heart heart text-danger"  @click="deleteLike(postId)"></i>
       {{ likes.length }}
     </button>
   </div>
@@ -49,7 +48,7 @@ export default {
           this.likes.push(response);
           //console.log(this.likes);
           this.getLike(postId);
-          window.location.reload();
+          //window.location.reload();
         })
         .catch((error) => {
           console.log(error);
@@ -82,7 +81,7 @@ export default {
               );
              // console.log(this.likes);
               this.liked = false;
-              window.location.reload();
+             // window.location.reload();
             })
             .catch((error) => {
               console.log(error);
@@ -126,4 +125,34 @@ export default {
   cursor: pointer;
   background-color: white;
 }
+
+.heart:hover{
+  animation: heart-animation .5s ease-in-out ;
+}
+
+@keyframes heart-animation {
+  0% {
+   transform: scale(1);
+  }
+  30% {
+    transform: scale(1.2);
+  }
+  50% {
+    
+    transform: scale(1.5);
+  }
+  70% {
+    transform: scale(1.8);
+  }
+  80% {
+    transform: scale(1.5);
+  }
+  90% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 </style>
