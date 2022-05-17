@@ -5,7 +5,8 @@
       {{ likes.length }}
     </button>
     <button v-else class="like" aria-label="Supprimer un like">
-      <i class="fas fa-heart text-danger" @click="deleteLike(postId)"></i>
+      <!--  @click="deleteLike(postId)" -->
+      <i class="fas fa-heart text-danger"></i>
       {{ likes.length }}
     </button>
   </div>
@@ -29,8 +30,7 @@ export default {
   },
   methods: {
     //Ajout d'un like
-    createLike() {
-      const postId = this.post;
+    createLike(postId) {
       axios
         .post(
           `http://localhost:3000/api/post/${postId}/like`,
@@ -58,8 +58,8 @@ export default {
     },
     
     //disliker un post
-    deleteLike(postId) {
-      console.log(this.likes);
+   /*  deleteLike(postId) {
+      console.log(this.likes, this.userId);
       axios
         .delete(
           `http://localhost:3000/api/post/${postId}/dislike`,
@@ -87,7 +87,7 @@ export default {
           console.log(error);
         });
     },
-
+ */
     //Récupérer les likes
     getLike(postId) {
       axios

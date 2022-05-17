@@ -14,7 +14,7 @@ router.get('/', auth, postCtrl.getAllPosts)
 router.delete('/:id',auth, postCtrl.deletePost); 
 //routes pour les likes 
 router.post('/:postId/like', likeCtrl.createLike); 
-router.delete('/:postId/dislike', likeCtrl.deleteLike);  
+//router.delete('/:postId/dislike', likeCtrl.deleteLike);  
 router.get('/:postId/likes', likeCtrl.getAllLikesPost);
 
 //exporter les routes 

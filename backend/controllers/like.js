@@ -1,6 +1,5 @@
 //Importer models
 const db = require("../models");
-const jwt = require("jsonwebtoken");
 
 //Ajouter un like
 exports.createLike = (req, res, next) => {
@@ -25,21 +24,14 @@ exports.getAllLikesPost = (req, res, next) => {
 
 
 //Supprimer un like
-exports.deleteLike = (req, res, next) => {
-/*  const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET'); 
-    const userId = decodedToken.userId; */
+/* exports.deleteLike = (req, res, next) => {
     //Récupérer le likes de la base de données
     db.Post.findOne({ where: { id: req.params.postId} })
         .then(() => {
-            db.Like.destroy({ where: { postId: req.params.postId, /* userId:userId */}})
-            /*  .then(like => {
-                console.log(like-1);
-                res.status(200).json(like-1);
-             }) */
+            db.Like.destroy({ where: { postId: req.params.postId }  })
                .then(() => res.status(200).json({ message: 'Like supprimé !' }))
                .catch(error => res.status(400).json({ error }));
 
         })
-        .catch(error => res.status(500).json({ error }));//erreur serveur
-};
+        .catch(error => res.status(500).json({ error }));
+}; */

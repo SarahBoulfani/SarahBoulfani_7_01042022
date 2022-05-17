@@ -471,7 +471,9 @@ input[type="file"] {
   color: #97a0b3;
    @media screen and (max-width: 700px) {
     font-size: 10px;
-
+  }
+    @media screen and (min-width: 769px) and (max-width: 920px)  {
+    display:block; 
   }
 }
 .box-body {
