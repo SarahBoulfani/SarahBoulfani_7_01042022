@@ -28,7 +28,7 @@ export default {
     this.getLike(this.postId);
   },
   methods: {
-    //Ajout d'un like
+    //Ajouter un like
     createLike(postId) {
       axios
         .post(

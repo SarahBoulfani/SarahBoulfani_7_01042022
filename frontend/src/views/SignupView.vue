@@ -150,11 +150,11 @@ export default {
       this.error = [];
       //firstname
       if (!this.userRegex.test(this.firstname)) {
-        this.error.firstname = "Prénom non valide, que les caractères minuscules et majuscules sont autorisés";
+        this.error.firstname = "Prénom non valide, que les caractères minuscules et majuscules sont autorisés.";
       }
       //lastname
       if (!this.userRegex.test(this.lastname)) {
-        this.error.lastname = "Nom non valide, que les caractères minuscules et majuscules sont autorisés";
+        this.error.lastname = "Nom non valide, que les caractères minuscules et majuscules sont autorisés.";
       }
       //email
       if (!this.emailRegex.test(this.email)) {
@@ -163,7 +163,7 @@ export default {
       //password
       if (!this.passwordRegex.test(this.password)) {
         this.error.password =
-          "Votre mot de passe doit contenir au moins 6 caractères, dont un chiffre, une minuscule et une majuscule";
+          "Votre mot de passe doit contenir au moins 6 caractères, dont un chiffre, une minuscule et une majuscule.";
       }
       //console.log("errors", this.error);
     
